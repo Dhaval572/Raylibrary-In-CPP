@@ -86,6 +86,7 @@ void Game::update()
 	}
 	else
 	{
+		DrawText("Press R to Restart", 100, 100, 50, GREEN);
 		if (IsKeyPressed(KEY_R)) // If 'R' pressed
 		{
 			reset();

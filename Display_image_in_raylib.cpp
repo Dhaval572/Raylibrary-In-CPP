@@ -3,7 +3,7 @@
 
 int main()
 {
-    InitWindow(800, 600, " ");
+    InitWindow(800, 600, "Background image");
 
     Texture2D backGround = LoadTexture("Images/background.png"); // To load an image
     Vector2 imagePos = {0, 0};
@@ -19,7 +19,7 @@ int main()
             DrawTexture(backGround, 0, 0, WHITE);
 
         if(IsKeyDown(KEY_RIGHT))
-            DrawTextureV(backGround, imagePos, WHITE);
+            DrawTextureV(backGround, imagePos, BLUE);
 
         EndDrawing();
     }

@@ -16,7 +16,7 @@ int main()
     while (!WindowShouldClose())
     {
         // Check if space key is pressed to fire bullet
-        if (IsKeyPressed(KEY_SPACE))
+        if (IsKeyPressed(KEY_SPACE) && !isBulletFired)
         {
             // Reset bullet position and set fired state to true
             bulletPosition = (Vector2){320, 340};

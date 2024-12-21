@@ -4,7 +4,7 @@
 int main()
 {
 	InitWindow(600, 500, "Image Rotation");
-	Image image = LoadImage("Images/exit_button.png"); // Replace with your image path
+	Image image = LoadImage("Images/pixel_ship.png"); // Replace with your image path
 	Texture2D texture = LoadTextureFromImage(image);
 	UnloadImage(image); // To deallocate the memory
 

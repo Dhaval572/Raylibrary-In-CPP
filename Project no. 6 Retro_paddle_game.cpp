@@ -50,6 +50,7 @@ public:
 
 	void resetTheBall()
 	{
+		// Setting the ball position at middle of the screen
 		ballX = GetScreenWidth() / 2;
 		ballY = GetScreenHeight() / 2;
 
@@ -65,6 +66,7 @@ Ball ball; // Creating a ball object
 class Paddle
 {
 protected:
+
 	void limitMovementOfpaddle()
 	{
 		// If paddle gone off the screen at up side
@@ -113,7 +115,7 @@ public:
 		if (paddleY + height / 2 <= ballY)
 			paddleY += speed; // Move down the paddle of bot
 
-		limitMovementOfpaddle();
+		limitMovementOfpaddle(); 
 	}
 };
 
@@ -145,7 +147,7 @@ int main()
 	bot.paddleY = sWidth / 2 - bot.height / 2;
 	bot.speed = 8;
 
-	SetTargetFPS(60);
+	SetTargetFPS(60); // Set FPS for smooth rendering
 
 	// Main game loop
 	while (!WindowShouldClose())
@@ -171,6 +173,7 @@ int main()
 
 		ClearBackground(Dark_Green);
 
+		// Design the back ground
 		DrawRectangle(sWidth / 2, 0, sWidth / 2, sHeight, Green);
 		DrawCircle(sWidth / 2, sHeight / 2, 100, Light_Green);
 		DrawLine(sWidth / 2, 0, sWidth / 2, sHeight, WHITE); // Separate two parts

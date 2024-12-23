@@ -8,3 +8,5 @@ This is a Tetris game implemented in C++ using the Raylib library. The game feat
 - **Right Arrow:** Move block right
 - **Down Arrow:** Move block down
 - **Up Arrow:** Rotate block
+
+So, play this game if you want.

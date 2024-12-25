@@ -8,11 +8,21 @@ public:
     Vector2 circlePos;
     Vector2 targetPos;
     const float moveSpeed = 200.0f;
+	const float radius = 20.0f;
 
     Hero()
     {
         circlePos = {300, 250};
         targetPos = circlePos;
+    }
+
+	void limitMovement()
+    {
+        // Ensure the circle stays within the window boundaries
+        if (circlePos.x < radius) circlePos.x = radius;
+        if (circlePos.y < radius) circlePos.y = radius;
+        if (circlePos.x > GetScreenWidth() - radius) circlePos.x = GetScreenWidth() - radius;
+        if (circlePos.y > GetScreenHeight() - radius) circlePos.y = GetScreenHeight() - radius;
     }
 
 	void Update()
@@ -31,15 +41,18 @@ public:
 		{
 			// Scale the direction vector to move at a constant speed
 			direction = Vector2Scale(direction, moveSpeed * GetFrameTime() / distance);
-			
+
 			// Update the circle's position
 			circlePos = Vector2Add(circlePos, direction);
+
+			limitMovement();
 		}
+		
 	}
 
     void Draw()
     {
-        DrawCircleV(circlePos, 20, BLUE);
+        DrawCircleV(circlePos, radius, BLUE);
     }
 };
 

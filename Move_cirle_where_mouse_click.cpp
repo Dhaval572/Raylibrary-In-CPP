@@ -4,6 +4,16 @@
 
 class Hero
 {
+	// ( Note: this is bydefault private function )
+	void limitMovement()
+    {
+        // Ensure the circle stays within the window boundaries
+        if (circlePos.x < radius) circlePos.x = radius;
+        if (circlePos.y < radius) circlePos.y = radius;
+        if (circlePos.x > GetScreenWidth() - radius) circlePos.x = GetScreenWidth() - radius;
+        if (circlePos.y > GetScreenHeight() - radius) circlePos.y = GetScreenHeight() - radius;
+    }
+
 public:
     Vector2 circlePos;
     Vector2 targetPos;
@@ -16,14 +26,6 @@ public:
         targetPos = circlePos;
     }
 
-	void limitMovement()
-    {
-        // Ensure the circle stays within the window boundaries
-        if (circlePos.x < radius) circlePos.x = radius;
-        if (circlePos.y < radius) circlePos.y = radius;
-        if (circlePos.x > GetScreenWidth() - radius) circlePos.x = GetScreenWidth() - radius;
-        if (circlePos.y > GetScreenHeight() - radius) circlePos.y = GetScreenHeight() - radius;
-    }
 
 	void Update()
 	{

@@ -2,7 +2,7 @@
 #include <raylib.h>
 #include <raymath.h> // To use Vector2Subtract etc
 
-class Hero
+class Ball
 {
 	// ( Note: this is bydefault private function )
 	void limitMovement()
@@ -24,7 +24,7 @@ public:
 	const float moveSpeed = 200.0f;
 	const float radius = 20.0f;
 
-	Hero()
+	Ball()
 	{
 		circlePos = {300, 250};
 		targetPos = circlePos;
@@ -66,16 +66,16 @@ int main()
 
 	SetTargetFPS(60);
 
-	Hero hero;
+	Ball ball;
 
 	while (!WindowShouldClose())
 	{
-		hero.Update();
+		ball.Update();
 
 		BeginDrawing();
 
 		ClearBackground(BLACK);
-		hero.Draw();
+		ball.Draw();
 
 		EndDrawing();
 	}

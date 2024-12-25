@@ -12,12 +12,6 @@ typedef struct Star
     float speed;
 } Star;
 
-// Returns random numbers
-int random(int min, int max)
-{
-    return (min + rand()) % (max - min + 1);
-}
-
 void InitStars(Star stars[], int count, int screenWidth, int min, int max)
 {
     // Evenly distribute stars within the vertical range of the strip

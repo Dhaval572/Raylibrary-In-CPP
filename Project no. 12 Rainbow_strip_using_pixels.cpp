@@ -25,7 +25,7 @@ void InitStars(Star stars[], int count, int screenWidth, int min, int max)
     {
         stars[i].x = (float)(rand() % screenWidth);
         stars[i].y = (float)(min + (rand() % (max - min + 1))); // Ensure y is in the strip's vertical range
-        stars[i].speed = (float)(rand() % 5 + 1);               // Random speed (up to 5)
+        stars[i].speed = (float)(rand() % 5 + 1); // Random speed (up to 5)
     }
 }
 
@@ -49,7 +49,8 @@ void UpdateStars(Star stars[], int count, int screenWidth, int min, int max)
 
 void DrawStars(Star stars[], int count, Color color, int min, int max)
 {
-    // Draw each star, but only those within the specified y-range (ensuring it's in the right strip)
+    // Draw each star, but only those within the specified y-range 
+    //(ensuring it's in the right strip)
     for (int i = 0; i < count; i++)
     {
         if (stars[i].y >= min && stars[i].y <= max)
@@ -65,7 +66,7 @@ int main()
 
     SetTargetFPS(120);
 
-    srand(time(NULL)); // Seed the random number generator
+    srand(time(NULL)); 
 
     // Define the colors for the rainbow
     Color rainBow[NUM_STRIPS] =
@@ -97,8 +98,8 @@ int main()
         // Update the stars for each color strip
         for (int i = 0; i < NUM_STRIPS; i++)
         {
-            int yStart = i * 100; // Vertical start of the strip (0, 100, 200, ...)
-            int yEnd = (i + 1) * 100;
+            int yStart = i * 100;     // Vertical start of the strip (0, 100, 200, ...)
+            int yEnd = (i + 1) * 100; // Vertical end of the strip (100, 200, 300, ...)
             UpdateStars(stars[i], MAX_STARS, 800, yStart, yEnd); // Update stars for each strip
         }
 
@@ -108,8 +109,8 @@ int main()
         // Draw the stars for each color strip
         for (int i = 0; i < NUM_STRIPS; i++)
         {
-            int yStart = i * 100; // Vertical start of the strip (0, 100, 200, ...)
-            int yEnd = (i + 1) * 100;
+            int yStart = i * 100;     // Vertical start of the strip (0, 100, 200, ...)
+            int yEnd = (i + 1) * 100; // Vertical end of the strip (100, 200, 300, ...)
             DrawStars(stars[i], MAX_STARS, rainBow[i], yStart, yEnd); // Draw stars with the corresponding color
         }
 

@@ -6,26 +6,29 @@ class Hero
 {
 	// ( Note: this is bydefault private function )
 	void limitMovement()
-    {
-        // Ensure the circle stays within the window boundaries
-        if (circlePos.x < radius) circlePos.x = radius;
-        if (circlePos.y < radius) circlePos.y = radius;
-        if (circlePos.x > GetScreenWidth() - radius) circlePos.x = GetScreenWidth() - radius;
-        if (circlePos.y > GetScreenHeight() - radius) circlePos.y = GetScreenHeight() - radius;
-    }
+	{
+		// Ensure the circle stays within the window boundaries
+		if (circlePos.x < radius)
+			circlePos.x = radius;
+		if (circlePos.y < radius)
+			circlePos.y = radius;
+		if (circlePos.x > GetScreenWidth() - radius)
+			circlePos.x = GetScreenWidth() - radius;
+		if (circlePos.y > GetScreenHeight() - radius)
+			circlePos.y = GetScreenHeight() - radius;
+	}
 
 public:
-    Vector2 circlePos;
-    Vector2 targetPos;
-    const float moveSpeed = 200.0f;
+	Vector2 circlePos;
+	Vector2 targetPos;
+	const float moveSpeed = 200.0f;
 	const float radius = 20.0f;
 
-    Hero()
-    {
-        circlePos = {300, 250};
-        targetPos = circlePos;
-    }
-
+	Hero()
+	{
+		circlePos = {300, 250};
+		targetPos = circlePos;
+	}
 
 	void Update()
 	{
@@ -49,35 +52,34 @@ public:
 
 			limitMovement();
 		}
-		
 	}
 
-    void Draw()
-    {
-        DrawCircleV(circlePos, radius, BLUE);
-    }
+	void Draw()
+	{
+		DrawCircleV(circlePos, radius, BLUE);
+	}
 };
 
 int main()
 {
-    InitWindow(600, 500, "Move the circle");
+	InitWindow(600, 500, "Move the circle");
 
-    SetTargetFPS(60);
+	SetTargetFPS(60);
 
-    Hero hero;
+	Hero hero;
 
-    while (!WindowShouldClose())
-    {
-        hero.Update();
+	while (!WindowShouldClose())
+	{
+		hero.Update();
 
-        BeginDrawing();
+		BeginDrawing();
 
-        ClearBackground(BLACK);
-        hero.Draw();
+		ClearBackground(BLACK);
+		hero.Draw();
 
-        EndDrawing();
-    }
+		EndDrawing();
+	}
 
-    CloseWindow();
-    return 0;
+	CloseWindow();
+	return 0;
 }

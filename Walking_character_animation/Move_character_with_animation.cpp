@@ -61,7 +61,8 @@ int UpdateAnimation(float &animTime, int &frame, bool isMoving)
 // Main game loop
 int main()
 {
-    InitWindow(1200, 600, "Walking Animation");
+    const int sWidth = 1200, sHeight = 600;
+    InitWindow(sWidth, sHeight, "Walking Animation");
 
     SetTargetFPS(60);
 
@@ -75,7 +76,7 @@ int main()
     Texture2D walkLeft1 = LoadTextureFromResizedImage("Images/monster_left_1.png", 150, 150);
     Texture2D walkLeft2 = LoadTextureFromResizedImage("Images/monster_left_2.png", 150, 150);
 
-    Vector2 position = {200.0f, 325.0f}; // Character position
+    Vector2 position = {sWidth/2, 325}; // Character position at center of screen width
     float animationTime = 0.0f;
     int frame = 0;
     float speed = 1.0f; // Animation speed

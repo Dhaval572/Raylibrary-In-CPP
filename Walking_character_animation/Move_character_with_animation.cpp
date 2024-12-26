@@ -16,7 +16,7 @@ Texture2D LoadTextureFromResizedImage(const char *path, int width, int height)
 }
 
 // Function to handle character movement
-void handleMovement(Vector2 *pos, float speed, bool &isMovingRight)
+void handleMovement(Vector2 *pos, float speed, bool &isMovingRight, int &imageWidth)
 {
     if (IsKeyDown(KEY_RIGHT))
     {
@@ -30,8 +30,8 @@ void handleMovement(Vector2 *pos, float speed, bool &isMovingRight)
     }
 
     // Movement limitation
-    if (pos->x > GetScreenWidth() - 100)
-        pos->x = GetScreenWidth() - 100;
+    if (pos->x > GetScreenWidth() - imageWidth)
+        pos->x = GetScreenWidth() - imageWidth;
 
     if (pos->x < 0)
         pos->x = 0;
@@ -61,21 +61,21 @@ int UpdateAnimation(float &animTime, int &frame, bool isMoving)
 // Main game loop
 int main()
 {
-    InitWindow(600, 500, "Walking Animation");
+    InitWindow(1200, 600, "Walking Animation");
 
     SetTargetFPS(60);
 
     // Load background and walking textures
-    Texture2D background = LoadTextureFromResizedImage("Images/background.png", 600, 500);
+    Texture2D background = LoadTextureFromResizedImage("Images/background.png", 1200, 600);
 
-    Texture2D walkRight1 = LoadTextureFromResizedImage("Images/monster_right_1.png", 100, 100);
-    Texture2D walkRight2 = LoadTextureFromResizedImage("Images/monster_right_2.png", 100, 100);
+    Texture2D walkRight1 = LoadTextureFromResizedImage("Images/monster_right_1.png", 150, 150);
+    Texture2D walkRight2 = LoadTextureFromResizedImage("Images/monster_right_2.png", 150, 150);
 
     // Load left-facing walk textures
-    Texture2D walkLeft1 = LoadTextureFromResizedImage("Images/monster_left_1.png", 100, 100);
-    Texture2D walkLeft2 = LoadTextureFromResizedImage("Images/monster_left_2.png", 100, 100);
+    Texture2D walkLeft1 = LoadTextureFromResizedImage("Images/monster_left_1.png", 150, 150);
+    Texture2D walkLeft2 = LoadTextureFromResizedImage("Images/monster_left_2.png", 150, 150);
 
-    Vector2 position = {200.0f, 300.0f}; // Character position
+    Vector2 position = {200.0f, 325.0f}; // Character position
     float animationTime = 0.0f;
     int frame = 0;
     float speed = 1.0f; // Animation speed
@@ -86,7 +86,7 @@ int main()
     {
         // Handle movement direction and update the "isMoving" flag
         isMoving = IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_LEFT);
-        handleMovement(&position, speed, isMovingRight);
+        handleMovement(&position, speed, isMovingRight, walkLeft1.width);
 
         // Update animation and movement
         frame = UpdateAnimation(animationTime, frame, isMoving);

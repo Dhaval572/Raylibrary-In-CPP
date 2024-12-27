@@ -1,5 +1,5 @@
 #include <raylib.h>
-#include "Player.hpp"
+#include "Game.hpp"
 
 int main()
 {
@@ -8,17 +8,18 @@ int main()
 
     SetTargetFPS(60);
 
-    // Create player object
-    Player player("Images/monster_right_1.png", "Images/monster_right_2.png",
-                  "Images/monster_left_1.png", "Images/monster_left_2.png", sWidth / 2, 325, 2.0f);
+    Game game;
 
     while (!WindowShouldClose())
     {
-        player.Update(); // Update player movement and animation
+        game.Update();
+        game.updateAnimation();
 
         BeginDrawing();
         ClearBackground(BLACK);
-        player.Draw(); // Draw the player to the screen
+
+        game.Draw();
+        
         EndDrawing();
     }
 

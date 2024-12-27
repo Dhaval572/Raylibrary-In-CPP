@@ -5,21 +5,21 @@
 Player::Player(const char *walkRight1Path, const char *walkRight2Path,
 			   const char *walkLeft1Path, const char *walkLeft2Path,
 			   float x, float y, float speed)
-	
-	// constructor initializer list 
-	: position({x, y}), 
-	  speed(speed), 
-	  isMoving(false), 
-	  isMovingRight(true), 
-	  frame(0), 
+
+	// constructor initializer list
+	: position({x, y}),
+	  speed(speed),
+	  isMoving(false),
+	  isMovingRight(true),
+	  frame(0),
 	  animationTime(0.0f)
 {
 
 	// Load textures for walking right and left
-	walkRight1 = loadTextureFromResizedImage(walkRight1Path, 150, 150);
-	walkRight2 = loadTextureFromResizedImage(walkRight2Path, 150, 150);
-	walkLeft1 = loadTextureFromResizedImage(walkLeft1Path, 150, 150);
-	walkLeft2 = loadTextureFromResizedImage(walkLeft2Path, 150, 150);
+	walkRight1 = loadTextureFromResizedImage("Images/monster_right_1.png", 150, 150);
+	walkRight2 = loadTextureFromResizedImage("Images/monster_right_2.png", 150, 150);
+	walkLeft1 = loadTextureFromResizedImage("Images/monster_left_1.png", 150, 150);
+	walkLeft2 = loadTextureFromResizedImage("Images/monster_left_2.png", 150, 150);
 
 	// Load background texture (fixed size)
 	background = loadTextureFromResizedImage("Images/background.png", 1200, 600);
@@ -64,7 +64,7 @@ void Player::updateAnimation()
 	{
 		animationTime += GetFrameTime(); // GetFrameTime() returns time in seconds
 
-		if (animationTime >= 0.2f)
+		if (animationTime >= 0.7f)
 		{						  // Delay between frames of 0.2 second
 			frame = !frame;		  // Swapping frames in 0.2f second
 			animationTime = 0.0f; // Reset the animTime
@@ -77,7 +77,7 @@ void Player::updateAnimation()
 }
 
 // Function to update player state (movement + animation)
-void Player::Update()
+void Player::update()
 {
 	isMoving = IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_LEFT);
 	handleMovement();
@@ -102,7 +102,7 @@ Image Player::resizeImage(const char *path, int width, int height)
 }
 
 // Function to draw the player
-void Player::Draw()
+void Player::draw()
 {
 	DrawTexture(background, 0, 0, WHITE); // Draw background
 

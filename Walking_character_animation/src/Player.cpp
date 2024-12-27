@@ -76,6 +76,12 @@ void Player::updateAnimation()
 	}
 }
 
+const Rectangle Player::playerRect() 
+{
+    return {position.x, position.y, (float)walkRight1.width, (float)walkRight1.height};
+}
+
+
 // Function to update player state (movement + animation)
 void Player::update()
 {

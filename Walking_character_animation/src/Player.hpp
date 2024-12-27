@@ -4,7 +4,7 @@
 class Player
 {
 public:
-
+	Player();
 	Player(const char *walkRight1Path, const char *walkRight2Path,
 		   const char *walkLeft1Path, const char *walkLeft2Path,
 		   float x, float y, float speed);
@@ -13,6 +13,7 @@ public:
 	void draw();
 	void handleMovement();
 	void updateAnimation();
+	const Rectangle playerRect();
 
 private:
 	Image resizeImage(const char *path, int width, int height);

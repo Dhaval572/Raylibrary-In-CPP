@@ -8,8 +8,8 @@ public:
 	Enemy1();
 	~Enemy1();
 	void draw();
-	void update();
-	void handleMovement();
+	void update(Player &player);
+	void handleMovement(Player &player);
 	void handleAnimation();
 
 private:

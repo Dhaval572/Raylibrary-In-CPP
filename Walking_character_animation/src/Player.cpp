@@ -16,10 +16,10 @@ Player::Player(const char *walkRight1Path, const char *walkRight2Path,
 {
 
 	// Load textures for walking right and left
-	walkRight1 = loadTextureFromResizedImage("Images/monster_right_1.png", 150, 150);
-	walkRight2 = loadTextureFromResizedImage("Images/monster_right_2.png", 150, 150);
-	walkLeft1 = loadTextureFromResizedImage("Images/monster_left_1.png", 150, 150);
-	walkLeft2 = loadTextureFromResizedImage("Images/monster_left_2.png", 150, 150);
+	walkRight1 = loadTextureFromResizedImage(walkRight1Path, 150, 150);
+	walkRight2 = loadTextureFromResizedImage(walkRight2Path, 150, 150);
+	walkLeft1 = loadTextureFromResizedImage(walkLeft1Path, 150, 150);
+	walkLeft2 = loadTextureFromResizedImage(walkLeft2Path, 150, 150);
 
 	// Load background texture (fixed size)
 	background = loadTextureFromResizedImage("Images/background.png", 1200, 600);

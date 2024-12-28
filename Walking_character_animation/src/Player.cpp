@@ -2,24 +2,22 @@
 #include "Player.hpp"
 
 // Constructor
-Player::Player(const char *walkRight1Path, const char *walkRight2Path,
-			   const char *walkLeft1Path, const char *walkLeft2Path,
-			   float x, float y, float speed)
+Player::Player()
 
-	// constructor initializer list
-	: position({x, y}),
-	  speed(speed),
+	// constructor initializer list	
+	:  speed(2.0f),
 	  isMoving(false),
 	  isMovingRight(true),
 	  frame(0),
 	  animationTime(0.0f)
 {
+	position = {GetScreenWidth() / 2.0f, 325.0f};
 
 	// Load textures for walking right and left
-	walkRight1 = loadTextureFromResizedImage(walkRight1Path, 150, 150);
-	walkRight2 = loadTextureFromResizedImage(walkRight2Path, 150, 150);
-	walkLeft1 = loadTextureFromResizedImage(walkLeft1Path, 150, 150);
-	walkLeft2 = loadTextureFromResizedImage(walkLeft2Path, 150, 150);
+	walkRight1 = loadTextureFromResizedImage("Sprites/Player walking/monster_right_1.png", 150, 150);
+	walkRight2 = loadTextureFromResizedImage("Sprites/Player walking/monster_right_2.png", 150, 150);
+	walkLeft1 = loadTextureFromResizedImage("Sprites/Player walking/monster_Left_1.png", 150, 150);
+	walkLeft2 = loadTextureFromResizedImage("Sprites/Player walking/monster_Left_2.png", 150, 150);
 
 	// Load background texture (fixed size)
 	background = loadTextureFromResizedImage("Images/background.png", 1200, 600);

@@ -4,14 +4,17 @@
 // Constructor
 Player::Player()
 
-	// constructor initializer list	
-	:  speed(2.0f),
+	// constructor initializer list
+	: speed(2.0f),
 	  isMoving(false),
 	  isMovingRight(true),
 	  frame(0),
 	  animationTime(0.0f)
 {
 	position = {GetScreenWidth() / 2.0f, 325.0f};
+	maxHealth = 100;
+	currentHealth = 25;
+	healthBar = {position.x / 2, position.y - 3, 150, 10};
 
 	// Load textures for walking right and left
 	walkRight1 = loadTextureFromResizedImage("Sprites/Player walking/monster_right_1.png", 150, 150);
@@ -74,11 +77,17 @@ void Player::updateAnimation()
 	}
 }
 
-const Rectangle Player::playerRect() 
+const Rectangle Player::playerRect()
 {
-    return {position.x, position.y, (float)walkRight1.width, (float)walkRight1.height};
+	return {position.x, position.y, (float)walkRight1.width, (float)walkRight1.height};
 }
 
+void Player::talkDamage(float damage)
+{
+	currentHealth -= damage;
+	if (currentHealth < 0)
+		currentHealth = 0; // Ensure health doesn't go below 0
+}
 
 // Function to update player state (movement + animation)
 void Player::update()
@@ -95,6 +104,36 @@ Texture2D Player::loadTextureFromResizedImage(const char *path, int width, int h
 	Texture2D texture = LoadTextureFromImage(resizedImage);
 	UnloadImage(resizedImage); // Free image memory after loading the texture
 	return texture;
+}
+
+void Player::drawHealthBar()
+{
+	updateHealthBar();
+
+	DrawRectangleRec(healthBar, healthColor);
+}
+
+void Player::updateHealthBar()
+{
+	// Calculate the health percentage
+	float healthPercentage = currentHealth / maxHealth;
+
+	// Update the width of the health bar based on the health percentage
+	healthBar.width = 100 * healthPercentage;
+
+	// Change the color of the health bar based on the health percentage
+	if (currentHealth <= maxHealth * 0.25f)
+		healthColor = RED;
+	else if (currentHealth <= maxHealth * 0.5f)
+		healthColor = YELLOW;
+	else
+		healthColor = GREEN;
+
+	// Set the healthbar mid point to player mid point
+	healthBar.x = position.x + (walkRight1.width / 2) - (healthBar.width / 2);
+
+	// Position the health bar just above the player
+	healthBar.y = position.y - 20;
 }
 
 // Function to resize an image
@@ -126,4 +165,6 @@ void Player::draw()
 		else
 			DrawTexture(walkLeft1, (int)position.x, (int)position.y, WHITE);
 	}
+
+	drawHealthBar();
 }

@@ -13,7 +13,7 @@ Player::Player()
 {
 	position = {GetScreenWidth() / 2.0f, 325.0f};
 	maxHealth = 100;
-	currentHealth = 25;
+	currentHealth = 100;
 	healthBar = {position.x / 2, position.y - 3, 150, 10};
 
 	// Load textures for walking right and left

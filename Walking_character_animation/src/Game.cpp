@@ -1,10 +1,6 @@
 #include "Game.hpp"
 
-Game::Game() : player("Sprites/Player walking/monster_right_1.png", 
-					  "Sprites/Player walking/monster_right_2.png",
-					  "Sprites/Player walking/monster_left_1.png", 
-					  "Sprites/Player walking/monster_left_2.png", 
-					  GetScreenWidth() / 2, 325, 2.0f)
+Game::Game() 
 {
 	// Constructor can initialize additional elements if needed
 }

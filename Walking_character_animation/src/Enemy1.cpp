@@ -188,10 +188,15 @@ void Enemy1::handleAnimation()
 	else
 	{
 		// If attacking or idle, change frame every 0.3 seconds (4 frames total)
-		if (animationTime >= 0.3f)
+		if (animationTime >= 1.0f)
 		{
 			frame = (frame + 1) % 4; // Cycle through attack frames
 			animationTime = 0.0f;	 // Reset the animation time
 		}
 	}
+}
+
+const Rectangle Enemy1::enemyRect()
+{
+	return {enemyPos.x, enemyPos.y, (float)(walk1.width), (float)(walk1.height)};
 }

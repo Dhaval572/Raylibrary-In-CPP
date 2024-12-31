@@ -5,7 +5,7 @@
 Player::Player()
 
 	// constructor initializer list
-	: speed(2.0f),
+	: speed(1.0f),
 	  isMoving(false),
 	  isMovingRight(true),
 	  frame(0),
@@ -66,9 +66,9 @@ void Player::updateAnimation()
 		animationTime += GetFrameTime(); // GetFrameTime() returns time in seconds
 
 		if (animationTime >= 0.7f)
-		{						  // Delay between frames of 0.2 second
-			frame = !frame;		  // Swapping frames in 0.2f second
-			animationTime = 0.0f; // Reset the animTime
+		{
+			frame = !frame; // Swapping frames
+			animationTime = 0.0f;
 		}
 	}
 	else
@@ -85,6 +85,7 @@ const Rectangle Player::playerRect()
 void Player::talkDamage(float damage)
 {
 	currentHealth -= damage;
+
 	if (currentHealth < 0)
 		currentHealth = 0; // Ensure health doesn't go below 0
 }

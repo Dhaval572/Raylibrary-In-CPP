@@ -1,9 +1,11 @@
+
 #pragma once
 #include <raylib.h>
 
 class Enemy1
 {
 public:
+
 	Enemy1();
 	~Enemy1();
 	Vector2 enemyPos;
@@ -11,6 +13,7 @@ public:
 	void update(Player &player);
 	void handleMovement(Player &player);
 	void handleAnimation();
+	const Rectangle enemyRect();
 
 private:
 	Image resizeTextureForWalk(const char *path, int width, int height);

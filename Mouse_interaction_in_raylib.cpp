@@ -6,7 +6,7 @@ int main()
     InitWindow(600, 500, "Move object"); 
 
     Vector2 cursorPos = { 0, 0 };   // Variable to store the cursor position
-    int radius = 50;               
+    int radius = 20;               
 
     SetTargetFPS(60);               
 
@@ -14,9 +14,11 @@ int main()
     {
         cursorPos = GetMousePosition(); // Get mouse position using Raylib function
 
+        HideCursor(); // hide the cursor in graphics window
         BeginDrawing();
         
         ClearBackground(RAYWHITE);      // Make background white
+
         // Draw the moving circle at the mouse position
         DrawCircleV(cursorPos, radius, BLUE);
 

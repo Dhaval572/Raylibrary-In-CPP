@@ -34,3 +34,12 @@ int main()
     CloseWindow(); 
     return 0;
 }
+/*
+
+Difference between KeyPressed and Key Released:
+
+    Key Pressed checks that a key is first pressed 
+
+    Key released checks that a key is released
+
+*/

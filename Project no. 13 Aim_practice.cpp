@@ -54,6 +54,7 @@ int main()
         }
         else // Game over
         {
+            ClearBackground(BLACK);
             DrawText("GAME OVER", GetScreenWidth() / 2 - MeasureText("GAME OVER", 40) / 2, GetScreenHeight() / 2 - 20, 40, RED);
 
             DrawText(TextFormat("Your last score was: %i", score), GetScreenWidth() / 2 - MeasureText(TextFormat("Your last score was: %i", score), 20) / 2, GetScreenHeight() / 2 + 20, 20, GREEN);

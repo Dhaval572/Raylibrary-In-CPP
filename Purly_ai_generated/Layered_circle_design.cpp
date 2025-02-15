@@ -5,13 +5,13 @@
 void designOne(Vector2 position, float radius, Color baseColor)
 {
     // Glow effect (outer transparent layer)
-    DrawCircleV(position, radius * 2.5f, ColorAlpha(baseColor, 0.15f)); // 15% opacity
+    DrawCircleV(position, radius * 3.5f, ColorAlpha(baseColor, 0.15f)); // 15% opacity
 
     // Main ball (middle layer, light)
-    DrawCircleV(position, radius, ColorAlpha(baseColor, 0.75f)); // 75% opacity
+    DrawCircleV(position, radius * 1.4f, ColorAlpha(baseColor, 0.75f)); // 75% opacity
 
-    // Inner ball (dark)
-    DrawCircleV(position, radius * 0.7f, baseColor); // 100% opacity
+    // Inner ball (Main ball, Dark)
+    DrawCircleV(position, radius, baseColor); // 100% opacity
 }
 
 // Design two

@@ -39,10 +39,11 @@ int main()
     while (!WindowShouldClose())
     {
         BeginDrawing();
-        ClearBackground(BLACK); // Black background
+        ClearBackground(BLACK);
 
         // Draw the layered circle
-        designOne((Vector2){100, 100}, 30, ballColor);
+        designOne((Vector2){200, 250}, 15, ballColor);
+        designTwo((Vector2){400, 250}, 35, ballColor);
 
         EndDrawing();
     }

@@ -1,12 +1,12 @@
 // Tetris game in c++
 #include <raylib.h>
-#include <iostream>
+#include <iostream> 
 #include "Game.hpp"
 #include "Colors.hpp"
 
 double lastUpdateTime = 0;
 
-bool eventTriggered(int interval)
+bool eventTriggered(double interval)
 {
 	double currentTime = GetTime();
 	if (currentTime - lastUpdateTime >= interval)
@@ -28,10 +28,10 @@ int main()
 
 	while (!WindowShouldClose())
 	{
-		// UpdateMusicStream(game.music); // There is some problem 
+		// UpdateMusicStream(game.music); // There is some problem
 		game.handleInput();
 
-		if (eventTriggered(1))
+		if (eventTriggered(0.2))
 			game.moveBlockDown();
 
 		BeginDrawing();

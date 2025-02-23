@@ -79,7 +79,8 @@ void Game::handleInput()
 
 	case KEY_DOWN:
 		moveBlockDown();
-		updateScore(0, 1);
+			updateScore(0, 1);
+			
 		break;
 
 	case KEY_UP:

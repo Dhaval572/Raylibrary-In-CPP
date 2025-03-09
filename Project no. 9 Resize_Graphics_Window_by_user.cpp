@@ -5,8 +5,8 @@ int main()
 {
     int width = 600;
     int height = 500;
-    const int minWidth = 300;
-    const int minHeight = 300;
+    const int minWidth = 410;
+    const int minHeight = 200;
     const int maxWidth = 1300;
     const int maxHeight = 700;
 
@@ -22,7 +22,7 @@ int main()
         {
             height += 5;
             if (height > maxHeight)
-                height = maxHeight; 
+                height = maxHeight;
             SetWindowSize(width, height);
         }
 

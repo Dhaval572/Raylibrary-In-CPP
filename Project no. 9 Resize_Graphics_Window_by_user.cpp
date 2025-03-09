@@ -60,7 +60,7 @@ int main()
         DrawText("Press UP to increase window height", 10, 10, 20, GREEN);
         DrawText("Press DOWN to decrease window height", 10, 40, 20, GREEN);
         DrawText("Press LEFT to decrease window width", 10, 70, 20, GREEN);
-        DrawText("Press DOWN to increase window width", 10, 100, 20, GREEN);
+        DrawText("Press RIGHT to increase window width", 10, 100, 20, GREEN);
 
         EndDrawing();
     }

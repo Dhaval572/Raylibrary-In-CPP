@@ -169,7 +169,7 @@ int main()
     constexpr int screenWidth = 1200;
     constexpr int screenHeight = 700;
 
-    InitWindow(screenWidth, screenHeight, "Infinite Racer (Raylib 5.5)");
+    InitWindow(screenWidth, screenHeight, "Run the car");
     SetTargetFPS(60);
 
     // Load background tile texture ("Soil_Tile")

@@ -68,10 +68,7 @@ private:
     {
         for (size_t x = 1; x < waterSurface.size() - 1; x++)
         {
-            float left = waterSurface[x - 1];
-            float center = waterSurface[x];
-            float right = waterSurface[x + 1];
-            waterSurface[x] = (left + center + right) / 3.0f;
+            waterSurface[x] = (waterSurface[x - 1] + waterSurface[x] + waterSurface[x + 1]) * (1.0f / 3.0f);
         }
     }
 

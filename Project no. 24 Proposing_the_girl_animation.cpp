@@ -5,6 +5,10 @@
 // Global variables for Happy jump
 float happyJumpOffset = 0.0f;
 bool goingUp = true;
+float yesTextTimer = 0.0f;
+int yesIndex = 0;
+const int totalYesTexts = 3;
+const char *yesTexts[] = {"Yes!", "yes!", "YES!"};
 
 void HappyEffects(float posX, float posY, float happyJumpOffset)
 {
@@ -42,6 +46,18 @@ void UpdateHappyJump()
     }
 }
 
+void UpdateYesEffect()
+{
+    yesTextTimer += GetFrameTime();
+
+    // Change "Yes!" every 0.5 seconds
+    if (yesTextTimer >= 0.5f)
+    {
+        yesTextTimer = 0.0f;
+        yesIndex = (yesIndex + 1) % totalYesTexts;
+    }
+}
+
 void DrawHappyGirl(float posX, float posY, float happyJumpOffset, Color color)
 {
     // Head
@@ -59,15 +75,24 @@ void DrawHappyGirl(float posX, float posY, float happyJumpOffset, Color color)
     DrawLine(posX, posY + 30 + happyJumpOffset, posX + 7, posY + 40 + happyJumpOffset, color);
 }
 
+void DrawHerReply(float posX, float posY)
+{
+    int fontSize = 20;
+    int textWidth = MeasureText(yesTexts[yesIndex], fontSize);
+    DrawText(yesTexts[yesIndex], posX - textWidth / 2, posY - 60 + happyJumpOffset, fontSize, RED);
+}
+
 void DrawHappyEffects(float posX, float posY)
 {
     UpdateHappyJump();
+    UpdateYesEffect();
 
     Color color = MAGENTA;
 
     DrawHappyGirl(posX, posY, happyJumpOffset, color);
-
     HappyEffects(posX, posY, happyJumpOffset);
+
+    DrawHerReply(posX, posY);
 }
 
 void DrawGirlIdle(float posX, float posY)
@@ -135,6 +160,11 @@ void UpdateWalking(float &walkTime, float &posX, const int sWidth, bool &isPropo
     }
 }
 
+void HisQuestion(int screenWidth)
+{
+    DrawText("Do you love me?", screenWidth / 2 - 70, 80, 50, RED);
+}
+
 int main()
 {
     const int screenWidth = 800;
@@ -164,7 +194,7 @@ int main()
         if (isProposing)
         {
             DrawHappyEffects(girlX, girlY);
-            DrawText("I love you!", screenWidth / 2 - 70, 80, 50, RED);
+            HisQuestion(screenWidth);
         }
         else
         {

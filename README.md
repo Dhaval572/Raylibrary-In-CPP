@@ -18,7 +18,7 @@ Follow these steps to install the project:
 ## Download
 
 Download this as a setup structure
-➡️ [Download raylib_setup.rar](./raylib_setup.rar)
+➡️ [Download raylib_setup.rar]((https://github.com/Dhaval572/Raylibrary-In-CPP/tree/main/Raylib_setup))
 
 
 ## Usage

@@ -21,6 +21,15 @@ void DrawWalkingPerson(float posX, float posY, float walkTime)
     DrawLine(posX, posY + 30, posX + 5 - legMove, posY + 45, BLUE);
 }
 
+void UpdateWalking(float &walkTime, float& posX, const int sWidth)
+{
+    walkTime += GetFrameTime();
+    posX += 50 * GetFrameTime();
+
+    if (posX > sWidth + 50)
+        posX = -50;
+}
+
 int main()
 {
     const int screenWidth = 800;
@@ -35,11 +44,7 @@ int main()
 
     while (!WindowShouldClose())
     {
-        walkTime += GetFrameTime();
-        posX += 50 * GetFrameTime(); 
-
-        if (posX > screenWidth + 50)
-            posX = -50;
+        UpdateWalking(walkTime, posX, screenWidth);
 
         BeginDrawing();
         ClearBackground(RAYWHITE);

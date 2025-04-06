@@ -1,7 +1,6 @@
 // PixelMorph: Interactive Image Processing App (Class-Based)
 #include <raylib.h>
 #include <array>
-#include <cstddef>
 using namespace std;
 
 enum class ImageProcess

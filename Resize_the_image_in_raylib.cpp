@@ -1,16 +1,12 @@
 // Resize image by dimensions
 #include <raylib.h>
 
-// Function to resize an image based on new width and height
 Image resizeImageByDimensions(const char *imagePath, int newWidth, int newHeight)
 {
-    // Load the image from file
     Image image = LoadImage(imagePath);
 
-    // Resize the image to the new width and height
     ImageResize(&image, newWidth, newHeight);
 
-    // Return the resized image
     return image;
 }
 
@@ -20,7 +16,7 @@ int main()
 
     SetTargetFPS(60);
 
-    Image croppedImage = resizeImageByDimensions("Images/background.png", 300, 300);
+    Image croppedImage = resizeImageByDimensions("Assets/background.png", 600, 500);
 
     Texture2D texture = LoadTextureFromImage(croppedImage);
 
@@ -28,7 +24,7 @@ int main()
     {
         BeginDrawing();
 
-        DrawTexture(texture, 100, 100, WHITE);
+        DrawTexture(texture, 0, 0, WHITE);
 
         EndDrawing();
     }

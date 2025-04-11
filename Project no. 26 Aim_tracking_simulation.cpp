@@ -167,9 +167,8 @@ int main()
 
     while (!WindowShouldClose())
     {
-        float dt = GetFrameTime();
         PollInput();
-        UpdateGame(dt);
+        UpdateGame(GetFrameTime());
         DrawGame();
     }
 

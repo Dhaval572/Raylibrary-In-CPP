@@ -53,7 +53,6 @@ struct Stickman
         position.x += velocity.x * dt * speedMultiplier;
         position.y += velocity.y * dt * speedMultiplier;
 
-        // Bounce the stickman
         if (position.x <= headRadius || position.x >= SCREEN_WIDTH - headRadius)
         {
             position.x = Clamp(position.x, headRadius, SCREEN_WIDTH - headRadius);
@@ -85,7 +84,6 @@ struct Stickman
     }
 };
 
-// Global Variables
 Stickman target;
 Difficulty difficulty = MEDIUM;
 GameState gameState = SELECT_DIFFICULTY;
@@ -150,6 +148,11 @@ void DrawGame()
 
         DrawText(TextFormat("Tracking: %.2fs", trackingTime), 10, 10, 24, GREEN);
         DrawText(TextFormat("Accuracy: %.1f%%", (totalTime > 0 ? (trackingTime / totalTime) * 100.0f : 0.0f)), 10, 40, 24, GREEN);
+
+        const char *difficultyText = (difficulty == HARD) ? "HARD" : "MEDIUM";
+        Color difficultyColor = (difficulty == HARD) ? RED : PURPLE;
+        int textWidth = MeasureText(difficultyText, 30);
+        DrawText(difficultyText, (SCREEN_WIDTH - textWidth) / 2, 10, 30, difficultyColor);
     }
 
     EndDrawing();

@@ -64,7 +64,7 @@ public:
     Vector3 moveInput;
 
     PlayerController(Vector3 startPos)
-        : position(startPos), moveSpeed(5.0f), lookSensitivity(0.07f), yaw(0.0f), pitch(0.0f),
+        : position(startPos), moveSpeed(5.0f), lookSensitivity(0.10f), yaw(0.0f), pitch(0.0f),
           model(), velocity({0, 0, 0}), bobPhase(0), bobAmplitude(0.015f), bobFrequency(10.0f),
           isMoving(false), smoothedPitch(0), smoothedYaw(0), moveInput({0, 0, 0})
     {

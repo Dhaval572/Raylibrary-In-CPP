@@ -23,6 +23,6 @@ int main()
         EndDrawing();
     }
 
-    CloseWindow(); // Close the window and OpenGL context
+    CloseWindow(); 
     return 0;
 }

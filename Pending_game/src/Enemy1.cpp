@@ -5,7 +5,7 @@
 Enemy1::Enemy1()
 {
 	// Initialize enemy properties
-	enemyPos = {0.0f, 380.0f};
+	enemyPos = {0.0f, 300.0f};
 	isMoving = false;
 	speed = 1.0f;
 	maxHealth = 100;
@@ -14,40 +14,55 @@ Enemy1::Enemy1()
 	frame = 0;
 	animationTime = 0.0f;
 
-	// Load walking textures
-	walk1 = loadTextureFromResizedImage("Sprites/Enemy walking/Sprite1.png", 100, 100);
-	walk2 = loadTextureFromResizedImage("Sprites/Enemy walking/Sprite2.png", 100, 100);
-	walk3 = loadTextureFromResizedImage("Sprites/Enemy walking/Sprite3.png", 100, 100);
-	walk4 = loadTextureFromResizedImage("Sprites/Enemy walking/Sprite4.png", 100, 100);
-	walk5 = loadTextureFromResizedImage("Sprites/Enemy walking/Sprite5.png", 100, 100);
-	walk6 = loadTextureFromResizedImage("Sprites/Enemy walking/Sprite6.png", 100, 100);
+	// Delay-related setup
+	spawnDelay = 1.5f;
+	elapsedTime = 0.0f;
+	isActive = false;
 
-	// Load attacking textures
-	attack1 = loadTextureFromResizedImage("Sprites/Enemy Attack/Sprite1.png", 100, 100);
-	attack2 = loadTextureFromResizedImage("Sprites/Enemy Attack/Sprite2.png", 100, 100);
-	attack3 = loadTextureFromResizedImage("Sprites/Enemy Attack/Sprite3.png", 100, 100);
-	attack4 = loadTextureFromResizedImage("Sprites/Enemy Attack/Sprite4.png", 100, 100);
+	// Load walking textures (240x240)
+	walk1 = loadTextureFromResizedImage("Sprites/Enemy walking/Walk_(1).png", 240, 240);
+	walk2 = loadTextureFromResizedImage("Sprites/Enemy walking/Walk_(2).png", 240, 240);
+	walk3 = loadTextureFromResizedImage("Sprites/Enemy walking/Walk_(3).png", 240, 240);
+	walk4 = loadTextureFromResizedImage("Sprites/Enemy walking/Walk_(4).png", 240, 240);
+	walk5 = loadTextureFromResizedImage("Sprites/Enemy walking/Walk_(5).png", 240, 240);
+	walk6 = loadTextureFromResizedImage("Sprites/Enemy walking/Walk_(6).png", 240, 240);
+	walk7 = loadTextureFromResizedImage("Sprites/Enemy walking/Walk_(7).png", 240, 240);
+	walk8 = loadTextureFromResizedImage("Sprites/Enemy walking/Walk_(8).png", 240, 240);
+
+	// Load attacking textures (also 240x240 for consistency)
+	attack1 = loadTextureFromResizedImage("Sprites/Enemy Attack/Attack_(8).png", 240, 240);
+	attack2 = loadTextureFromResizedImage("Sprites/Enemy Attack/Attack_(9).png", 240, 240);
+	attack3 = loadTextureFromResizedImage("Sprites/Enemy Attack/Attack_(10).png", 240, 240);
+	attack4 = loadTextureFromResizedImage("Sprites/Enemy Attack/Attack_(11).png", 240, 240);
+	attack5 = loadTextureFromResizedImage("Sprites/Enemy Attack/Attack_(12).png", 240, 240);
+	attack6 = loadTextureFromResizedImage("Sprites/Enemy Attack/Attack_(13).png", 240, 240);
+	attack7 = loadTextureFromResizedImage("Sprites/Enemy Attack/Attack_(14).png", 240, 240);
+	attack8 = loadTextureFromResizedImage("Sprites/Enemy Attack/Attack_(15).png", 240, 240);
 }
 
 Enemy1::~Enemy1()
 {
-	// Unload textures
 	UnloadTexture(walk1);
 	UnloadTexture(walk2);
 	UnloadTexture(walk3);
 	UnloadTexture(walk4);
 	UnloadTexture(walk5);
 	UnloadTexture(walk6);
+	UnloadTexture(walk7);
+	UnloadTexture(walk8);
 
 	UnloadTexture(attack1);
 	UnloadTexture(attack2);
 	UnloadTexture(attack3);
 	UnloadTexture(attack4);
+	UnloadTexture(attack5);
+	UnloadTexture(attack6);
+	UnloadTexture(attack7);
+	UnloadTexture(attack8);
 }
 
 void Enemy1::draw()
 {
-	// Choose the current frame based on whether the enemy is moving or attacking
 	Texture2D currentFrame;
 
 	if (isMoving)
@@ -72,6 +87,12 @@ void Enemy1::draw()
 		case 5:
 			currentFrame = walk6;
 			break;
+		case 6:
+			currentFrame = walk7;
+			break;
+		case 7:
+			currentFrame = walk8;
+			break;
 		default:
 			currentFrame = walk1;
 			break;
@@ -93,106 +114,114 @@ void Enemy1::draw()
 		case 3:
 			currentFrame = attack4;
 			break;
+		case 4:
+			currentFrame = attack5;
+			break;
+		case 5:
+			currentFrame = attack6;
+			break;
+		case 6:
+			currentFrame = attack7;
+			break;
+		case 7:
+			currentFrame = attack8;
+			break;
 		default:
 			currentFrame = attack1;
 			break;
 		}
 	}
 
-	// Draw the current frame
 	DrawTexture(currentFrame, (int)enemyPos.x, (int)enemyPos.y, WHITE);
 	drawHealthBar();
 }
 
 void Enemy1::update(Player &player)
 {
-	// Handle movement logic based on collision with player and screen boundaries
-	handleMovement(player);
-	// Handle animation logic
-	handleAnimation();
+	elapsedTime += GetFrameTime();
+
+	if (elapsedTime >= spawnDelay)
+		isActive = true;
+
+	if (isActive)
+	{
+		handleMovement(player);
+		handleAnimation();
+	}
 }
 
 Image Enemy1::resizeTextureForWalk(const char *path, int width, int height)
 {
 	Image img = LoadImage(path);
-	ImageResize(&img, width, height); // Resize the image
-	return img;						  // Return the resized image
+	ImageResize(&img, width, height);
+	return img;
 }
 
 Texture2D Enemy1::loadTextureFromResizedImage(const char *path, int width, int height)
 {
-	// Resize the image to the desired dimensions
 	Image resizedImage = resizeTextureForWalk(path, width, height);
-
-	// Convert the resized image to a texture
 	Texture2D texture = LoadTextureFromImage(resizedImage);
-
-	// Unload the temporary image as we no longer need it
 	UnloadImage(resizedImage);
-
-	return texture; // Return the created texture
+	return texture;
 }
 
 void Enemy1::drawHealthBar()
 {
-	healthBar.x = enemyPos.x + (walk1.width / 2) - (healthBar.width / 2);
-    healthBar.y = enemyPos.y - 10;
-	DrawRectangleRec(healthBar, RED);  
-}
+	// Calculate dimensions based on current frame's texture
+	float currentWidth = isMoving ? walk1.width : attack1.width;
 
-void Enemy1::updateHealthBar()
-{
-	float healthPercentage = currentHealth / maxHealth;
+	// Health bar dimensions - smaller width but taller height
+	float healthBarWidth = currentWidth * 0.2f; // 50% of enemy width
+	float healthBarHeight = 8.0f;				// Taller than before (8px)
 
-	healthBar.width = 200 * healthPercentage; // 200 is maximum width of  health bar
+	float healthBarX = enemyPos.x + (currentWidth - healthBarWidth) / 2.0f;
+	float healthBarY = enemyPos.y + 60;
+
+	// Foreground (current health) - bright red
+	float healthPercentage = (float)currentHealth / (float)maxHealth;
+	float filledWidth = healthBarWidth * healthPercentage;
+
+	DrawRectangleRec(
+		{healthBarX, healthBarY, filledWidth, healthBarHeight},
+		RED);
+
+	// Add border for better visibility
+	DrawRectangleLinesEx(
+		{healthBarX, healthBarY, healthBarWidth, healthBarHeight},
+		1.0f,
+		ColorAlpha(WHITE, 0.8f) // Slightly transparent white border
+	);
 }
 
 void Enemy1::handleMovement(Player &player)
 {
-	// Define the enemy's hitbox
 	Rectangle enemyRect = {enemyPos.x, enemyPos.y, (float)walk1.width, (float)walk1.height};
-	Rectangle playerRect = player.playerRect(); // Assuming playerRect() gives the bounding box of the player
+	Rectangle playerRect = player.playerRect();
 
-	// Check for collision with player
 	if (CheckCollisionRecs(enemyRect, playerRect))
 	{
-		isMoving = false; // Stop moving if colliding with the player
+		isMoving = false;
 	}
 	else if (enemyPos.x < playerRect.x)
 	{
-		isMoving = true;	 // Continue moving towards the player
-		enemyPos.x += speed; // Move right
+		isMoving = true;
+		enemyPos.x += speed;
 	}
 
-	// Wrap around screen if it goes off the right edge
 	if (enemyPos.x > GetScreenWidth() + walk1.width)
 	{
-		enemyPos.x = 0; // Reset position to the left side of the screen
+		enemyPos.x = -walk1.width;
 	}
 }
 
 void Enemy1::handleAnimation()
 {
-	// Update the animation time based on the frame time
 	animationTime += GetFrameTime();
 
-	if (isMoving)
+	if (animationTime >= 0.3f)
 	{
-		// If moving, change frame every 0.3 seconds (6 frames total)
-		if (animationTime >= 0.3f)
-		{
-			frame = (frame + 1) % 6; // Cycle through walking frames
-			animationTime = 0.0f;	 // Reset the animation time
-		}
-	}
-	else
-	{
-		// If attacking or idle, change frame every 0.3 seconds (4 frames total)
-		if (animationTime >= 1.0f)
-		{
-			frame = (frame + 1) % 4; // Cycle through attack frames
-			animationTime = 0.0f;	 // Reset the animation time
-		}
+		frame = (frame + 1) % 8;
+		animationTime = 0.0f;
 	}
 }
 

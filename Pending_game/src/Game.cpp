@@ -23,7 +23,7 @@ void Game::Draw()
         // Clear the background
         ClearBackground(BLACK);
 
-        const char* Text = "GAME OVER";
+        const char *Text = "GAME OVER";
 
         int textWidth = MeasureText(Text, 40);
 
@@ -50,7 +50,7 @@ void Game::Update()
         damageDelayTimer = 0.0f;  // Reset the timer after applying damage
     }
 
-    if(player.getHealth() <= 0.0f)
+    if (player.getHealth() <= 0.0f)
         gameOver = true;
 
     updateAnimation();

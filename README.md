@@ -14,32 +14,5 @@ Raylib is a simple and easy-to-use library to enjoy videogames programming. It i
 ## Installation
 Follow these steps to install the project:
 1. Download the Raylib library from the [official website](https://www.raylib.com/).
-2. Extract the files to your project directory.
-3. Include the Raylib header files in your project.
-
-## Usage
-To use Raylib in your project, include the following code in your main file:
-
-```c
-#include <raylib.h>
-
-int main()
-{
-    InitWindow(600, 500, "Welcome to raylib"); // Set screen width and height
-
-	// Main game loop
-    while (!WindowShouldClose())
-    {
-        BeginDrawing(); 
-
-        // Some statements
-		//-----***-----//
-		//-----***-----//
-		//-----***-----//
-
-        EndDrawing();
-    }
-
-    CloseWindow();
-    return 0;
-}
+2. Download this as a directory structure or setup of raylib ➡️ [Download raylib_setup.rar](https://github.com/Dhaval572/Raylibrary-In-CPP/blob/main/Raylib_setup/Raylib_setup.rar)
+3. After downloading the .rar file, you must extract it and open the workshop whenever you want and write your code in src/main.cpp

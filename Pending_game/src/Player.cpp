@@ -3,26 +3,27 @@
 
 // Constructor
 Player::Player()
-
-	// constructor initializer list
-	: speed(1.0f),
+	: position{GetScreenWidth() / 2.0f, 325.0f},
+	  speed(1.0f),
+	  currentHealthValue(100.0f),
+	  maxHealthValue(100.0f),
+	  healthBar{},
+	  healthColor(WHITE),
 	  isMoving(false),
 	  isMovingRight(true),
 	  frame(0),
-	  animationTime(0.0f)
+	  animationTime(0.0f),
+	  healCooldown(1.0f), // Heal every 1 second
+	  healTimer(0.0f)	  // Start with no healing time
 {
-	position = {GetScreenWidth() / 2.0f, 325.0f};
-	maxHealth = 100;
-	currentHealth = 100;
+	// Initialize health bar position and size
 	healthBar = {position.x / 2, position.y - 3, 150, 10};
 
-	// Load textures for walking right and left
+	// Load textures
 	walkRight1 = loadTextureFromResizedImage("Sprites/Player walking/monster_right_1.png", 150, 150);
 	walkRight2 = loadTextureFromResizedImage("Sprites/Player walking/monster_right_2.png", 150, 150);
 	walkLeft1 = loadTextureFromResizedImage("Sprites/Player walking/monster_Left_1.png", 150, 150);
 	walkLeft2 = loadTextureFromResizedImage("Sprites/Player walking/monster_Left_2.png", 150, 150);
-
-	// Load background texture (fixed size)
 	background = loadTextureFromResizedImage("Images/background.png", 1200, 600);
 }
 
@@ -36,21 +37,20 @@ Player::~Player()
 	UnloadTexture(background);
 }
 
-// Function to handle movement
+// Movement handling
 void Player::handleMovement()
 {
 	if (IsKeyDown(KEY_RIGHT))
 	{
-		position.x += speed; // Move right
+		position.x += speed;
 		isMovingRight = true;
 	}
 	else if (IsKeyDown(KEY_LEFT))
 	{
-		position.x -= speed; // Move left
+		position.x -= speed;
 		isMovingRight = false;
 	}
 
-	// Movement limitation
 	if (position.x > GetScreenWidth() - walkRight1.width)
 		position.x = GetScreenWidth() - walkRight1.width;
 
@@ -58,91 +58,94 @@ void Player::handleMovement()
 		position.x = 0;
 }
 
-// Function to update animation frame
+// Animation update
 void Player::updateAnimation()
 {
 	if (isMoving)
 	{
-		animationTime += GetFrameTime(); // GetFrameTime() returns time in seconds
-
+		animationTime += GetFrameTime();
 		if (animationTime >= 0.7f)
 		{
-			frame = !frame; // Swapping frames
+			frame = !frame;
 			animationTime = 0.0f;
 		}
 	}
 	else
 	{
-		frame = 0; // If character is not moving
+		frame = 0;
 	}
 }
 
+// Player rectangle
 const Rectangle Player::playerRect()
 {
 	return {position.x, position.y, (float)walkRight1.width, (float)walkRight1.height};
 }
 
-void Player::talkDamage(float damage)
+// Damage handling
+void Player::takeDamage(float damage)
 {
-	currentHealth -= damage;
-
-	if (currentHealth < 0)
-		currentHealth = 0; // Ensure health doesn't go below 0
+	currentHealthValue -= damage;
+	if (currentHealthValue < 0)
+		currentHealthValue = 0;
 }
 
+// Healing
+void Player::heal(float amount)
+{
+	currentHealthValue += amount;
+	if (currentHealthValue > maxHealthValue)
+		currentHealthValue = maxHealthValue;
+}
+
+// Healing over time
+void Player::healOverTime(float amount, float cooldown)
+{
+	healTimer += GetFrameTime();
+	if (healTimer >= healCooldown)
+	{
+		heal(amount);
+		healTimer = 0.0f;
+	}
+}
+
+// Health accessors
 float Player::getHealth()
 {
-	return currentHealth;
+	return currentHealthValue;
 }
 
-// Function to update player state (movement + animation)
+float Player::currentHealth() const
+{
+	return currentHealthValue;
+}
+
+float Player::maxHealth() const
+{
+	return maxHealthValue;
+}
+
+// Update logic
 void Player::update()
 {
 	isMoving = IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_LEFT);
 	handleMovement();
 	updateAnimation();
+
+	// Heal over time (for demonstration)
+	healOverTime(0.5f, healCooldown); // Heal 0.5 health every second
 }
 
-// Function to load textures from resized images
+// Resize and load texture
 Texture2D Player::loadTextureFromResizedImage(const char *path, int width, int height)
 {
 	Image resizedImage = resizeImage(path, width, height);
 	Texture2D texture = LoadTextureFromImage(resizedImage);
-	UnloadImage(resizedImage); // Free image memory after loading the texture
+	UnloadImage(resizedImage);
 	return texture;
 }
 
-void Player::drawHealthBar()
-{
-	updateHealthBar();
-
-	DrawRectangleRec(healthBar, healthColor);
-}
-
-void Player::updateHealthBar()
-{
-	// Calculate the health percentage
-	float healthPercentage = currentHealth / maxHealth;
-
-	// Update the width of the health bar based on the health percentage
-	healthBar.width = 100 * healthPercentage;
-
-	// Change the color of the health bar based on the health percentage
-	if (currentHealth <= maxHealth * 0.25f)
-		healthColor = RED;
-	else if (currentHealth <= maxHealth * 0.5f)
-		healthColor = YELLOW;
-	else
-		healthColor = GREEN;
-
-	// Set the healthbar mid point to player mid point
-	healthBar.x = position.x + (walkRight1.width / 2) - (healthBar.width / 2);
-
-	// Position the health bar just above the player
-	healthBar.y = position.y - 20;
-}
-
-// Function to resize an image
+// Resize helper
 Image Player::resizeImage(const char *path, int width, int height)
 {
 	Image img = LoadImage(path);
@@ -150,27 +153,46 @@ Image Player::resizeImage(const char *path, int width, int height)
 	return img;
 }
 
-// Function to draw the player
+// Draw health bar
+void Player::drawHealthBar()
+{
+	updateHealthBar();
+	DrawRectangleRec(healthBar, healthColor);
+}
+
+// Update health bar visuals
+void Player::updateHealthBar()
+{
+	float healthPercentage = currentHealthValue / maxHealthValue;
+	healthBar.width = 100 * healthPercentage;
+
+	if (currentHealthValue <= maxHealthValue * 0.25f)
+		healthColor = RED;
+	else if (currentHealthValue <= maxHealthValue * 0.5f)
+		healthColor = YELLOW;
+	else
+		healthColor = GREEN;
+
+	healthBar.x = position.x + (walkRight1.width / 2) - (healthBar.width / 2);
+	healthBar.y = position.y - 20;
+}
+
+// Drawing player and background
 void Player::draw()
 {
-	DrawTexture(background, 0, 0, WHITE); // Draw background
+	DrawTexture(background, 0, 0, WHITE);
 
-	// Draw walking animation based on movement direction
+	Texture2D currentTexture;
 	if (isMoving)
 	{
-		if (isMovingRight)
-			DrawTexture(frame == 0 ? walkRight1 : walkRight2, (int)position.x, (int)position.y, WHITE);
-		else
-			DrawTexture(frame == 0 ? walkLeft1 : walkLeft2, (int)position.x, (int)position.y, WHITE);
+		currentTexture = isMovingRight ? (frame == 0 ? walkRight1 : walkRight2)
+									   : (frame == 0 ? walkLeft1 : walkLeft2);
 	}
 	else
 	{
-		// Draw idle texture based on direction
-		if (isMovingRight)
-			DrawTexture(walkRight1, (int)position.x, (int)position.y, WHITE);
-		else
-			DrawTexture(walkLeft1, (int)position.x, (int)position.y, WHITE);
+		currentTexture = isMovingRight ? walkRight1 : walkLeft1;
 	}
 
+	DrawTexture(currentTexture, (int)position.x, (int)position.y, WHITE);
 	drawHealthBar();
 }

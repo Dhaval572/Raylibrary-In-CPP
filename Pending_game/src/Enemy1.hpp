@@ -1,3 +1,7 @@
+#pragma once
+#include <raylib.h>
+#include "Player.hpp"
+
 class Enemy1
 {
 private:
@@ -9,8 +13,11 @@ private:
 	Rectangle healthBar;
 	int frame;
 	float animationTime;
-	Texture2D walk1, walk2, walk3, walk4, walk5, walk6, walk7, walk8;
-	Texture2D attack1, attack2, attack3, attack4, attack5, attack6, attack7, attack8;
+
+	// Use arrays instead of individual textures
+	Texture2D walkFrames[8];
+	Texture2D attackFrames[8];
+
 	float spawnDelay;
 	float elapsedTime;
 	bool isActive;
@@ -18,6 +25,7 @@ private:
 public:
 	Enemy1();
 	~Enemy1();
+
 	void draw();
 	void update(Player &player);
 	Image resizeTextureForWalk(const char *path, int width, int height);
@@ -26,4 +34,5 @@ public:
 	void handleMovement(Player &player);
 	void handleAnimation();
 	const Rectangle enemyRect();
+	Texture2D getCurrentAnimationFrame();
 };

@@ -24,39 +24,37 @@
 +----------------------------------------------------------------------------------+
 */
 
-
-
 int main()
 {
-    InitWindow(800, 600, "Sprite Animation Header-Based");
-    SetTargetFPS(60);
+   InitWindow(800, 600, "Sprite Animation Header-Based");
+   SetTargetFPS(60);
 
-    SpriteAnimation walk("Assets/Walking/Jump_({}).png", 8, 0.1f);
-    SpriteAnimation attack("Assets/Attack/Attack_017_({}).png", 6, 0.1f);
-    SpriteAnimation jump("Assets/Walking/Jump_({}).png", 8, 0.1f);
-    SpriteAnimation hit("Assets/Hit/Hit_({}).png", 6, 0.1f);
-    SpriteAnimation idle("Assets/Idle/Idle_({}).png", 6, 0.2f);
+   SpriteAnimation walk("Assets/Walking/Jump_({}).png", 8, 0.1f);
+   SpriteAnimation attack("Assets/Attack/Attack_017_({}).png", 6, 0.1f);
+   SpriteAnimation jump("Assets/Walking/Jump_({}).png", 8, 0.1f);
+   SpriteAnimation hit("Assets/Hit/Hit_({}).png", 6, 0.1f);
+   SpriteAnimation idle("Assets/Idle/Idle_({}).png", 6, 0.2f);
 
-    while (!WindowShouldClose())
-    {
-        walk.Update();
-        attack.Update();
-        jump.Update();
-        hit.Update();
-        idle.Update();
+   while (!WindowShouldClose())
+   {
+      walk.Update();
+      attack.Update();
+      jump.Update();
+      hit.Update();
+      idle.Update();
 
-        BeginDrawing();
-        ClearBackground(RAYWHITE);
+      BeginDrawing();
+      ClearBackground(RAYWHITE);
 
-        walk.Draw({100, 300});
-        attack.Draw({250, 300});
-        jump.Draw({400, 300});
-        hit.Draw({550, 300});
-        idle.Draw({700, 300});
+      walk.Draw({100, 300});
+      attack.Draw({250, 300});
+      jump.Draw({400, 300});
+      hit.Draw({550, 300});
+      idle.Draw({700, 300});
 
-        EndDrawing();
-    }
+      EndDrawing();
+   }
 
-    CloseWindow();
-    return 0;
+   CloseWindow();
+   return 0;
 }

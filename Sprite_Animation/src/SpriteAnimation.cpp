@@ -9,7 +9,7 @@ SpriteAnimation::SpriteAnimation(const string &pattern, int count, float speed)
 	{
 		string path = pattern;
 		path.replace(path.find("{}"), 2, to_string(i));
-		frames.push_back(LoadTexture(path.c_str()));
+		frames.emplace_back(LoadTexture(path.c_str()));
 	}
 }
 

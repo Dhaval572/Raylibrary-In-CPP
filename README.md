@@ -1,8 +1,5 @@
 # Raylib Project
 
-[![License: Zlib](https://img.shields.io/badge/License-Zlib-lightgrey.svg)](https://opensource.org/licenses/Zlib)
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/raysan5/raylib)
-
 ## Introduction
 Raylib is a simple and easy-to-use library to enjoy videogames programming. It is highly portable and cross-platform, making it a great choice for game development.
 

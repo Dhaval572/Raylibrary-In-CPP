@@ -20,7 +20,6 @@ void Game::Draw()
 
     else
     {
-        // Clear the background
         ClearBackground(BLACK);
 
         const char *Text = "GAME OVER";
@@ -38,8 +37,8 @@ void Game::Update()
 {
     handleInput();
 
-    player.update(); // Update the player's state (position, logic, etc.)
-    // enemy1.update(player);
+    player.update(); 
+    enemy1.update(player);
     dragon.update(player);
 
     damageDelayTimer += GetFrameTime(); // GetFrameTime() is from Raylib or similar frameworks
@@ -59,8 +58,7 @@ void Game::Update()
 
 void Game::handleInput()
 {
-    player.handleMovement(); // Handle player input and movement
-    // enemy1.handleMovement(player);
+    player.handleMovement(); 
 }
 
 void Game::updateAnimation()

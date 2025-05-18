@@ -9,7 +9,7 @@ Player::Player()
 	  maxHealthValue(100.0f),
 	  healthBar{},
 	  healthColor(WHITE),
-	  isMoving(false),
+	  isMoving(false),                   
 	  isMovingRight(true),
 	  frame(0),
 	  animationTime(0.0f),
@@ -20,8 +20,8 @@ Player::Player()
 	healthBar = {position.x / 2, position.y - 3, 150, 10};
 
 	// Load textures
-	walkRight1 = loadTextureFromResizedImage("Sprites/Player walking/monster_right_1.png", 150, 150);
-	walkRight2 = loadTextureFromResizedImage("Sprites/Player walking/monster_right_2.png", 150, 150);
+	walkRight1 = loadTextureFromResizedImage("Sprites/Player/Walk_3.png", 150, 150);
+	walkRight2 = loadTextureFromResizedImage("Sprites/Player/Walk_3.png", 150, 150);
 	walkLeft1 = loadTextureFromResizedImage("Sprites/Player walking/monster_Left_1.png", 150, 150);
 	walkLeft2 = loadTextureFromResizedImage("Sprites/Player walking/monster_Left_2.png", 150, 150);
 	background = loadTextureFromResizedImage("Images/background.png", 1200, 600);

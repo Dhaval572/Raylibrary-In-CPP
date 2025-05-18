@@ -16,10 +16,9 @@ int main()
         game.updateAnimation();
 
         BeginDrawing();
-        ClearBackground(BLACK); 
+        ClearBackground(RAYWHITE); 
 
         game.Draw();
-        
         EndDrawing();
     }
 

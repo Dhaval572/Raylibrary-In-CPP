@@ -1,5 +1,6 @@
 #pragma once
 #include <raylib.h>
+#include <cmath>
 #define JUMP_VELOCITY -9.0f
 #define GRAVITY 0.6f
 #define TERMINAL_VELOCITY 15.0f
@@ -7,7 +8,7 @@
 class Stickman
 {
     Vector2 position;
-    Color color;
+    const Color color;
     float walkTime;
     float verticalVelocity;
     float groundLevel;

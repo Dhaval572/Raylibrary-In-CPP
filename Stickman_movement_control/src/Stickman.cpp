@@ -1,5 +1,4 @@
 #include "Stickman.hpp"
-#include <cmath>
 
 Stickman::Stickman(Vector2 pos, Color col)
 	: position(pos), color(col), walkTime(0.0f)
@@ -41,8 +40,7 @@ void Stickman::Update()
 		verticalVelocity += GRAVITY;
 
 		// Clamp falling speed
-		if (verticalVelocity > TERMINAL_VELOCITY)
-			verticalVelocity = TERMINAL_VELOCITY;
+		verticalVelocity = fminf(verticalVelocity, TERMINAL_VELOCITY);
 
 		// Ground collision
 		if (position.y >= groundLevel)
@@ -56,6 +54,7 @@ void Stickman::Update()
 	// Boundary
 	if (position.x < 10)
 		position.x = 10; // 10 is head radius
+
 	if (position.x > GetScreenWidth() - 10)
 		position.x = GetScreenWidth() - 10;
 

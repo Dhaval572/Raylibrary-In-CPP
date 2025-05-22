@@ -5,14 +5,14 @@ int main()
 {
     InitWindow(600, 500, " ");
 
-    Stickman player({10, 250}, MAGENTA);
+    Stickman player({10, 355}, MAGENTA);
 
     SetTargetFPS(60);
     while (!WindowShouldClose())
     {
         player.Update();
 
-        BeginDrawing(); 
+        BeginDrawing();
         ClearBackground(RAYWHITE);
 
         player.Draw();

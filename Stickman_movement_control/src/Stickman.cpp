@@ -95,4 +95,7 @@ void Stickman::Draw()
 		DrawLine(position.x, position.y + 30, position.x - 5 + legMove, position.y + 45, color);
 		DrawLine(position.x, position.y + 30, position.x + 5 - legMove, position.y + 45, color);
 	}
+
+	// Ground
+	DrawRectangle(0, 400, GetScreenWidth(), 100, GREEN);
 }

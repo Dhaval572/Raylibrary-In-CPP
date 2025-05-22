@@ -12,9 +12,6 @@ void Stickman::Update()
 {
 	isMoving = false;
 
-	if (isMoving)
-		walkTime += GetFrameTime();
-
 	if (IsKeyDown(KEY_RIGHT))
 	{
 		isLookingRight = true;
@@ -27,6 +24,9 @@ void Stickman::Update()
 		position.x -= 3.0f;
 		isMoving = true;
 	}
+
+	if (isMoving)
+		walkTime += GetFrameTime();
 
 	if (IsKeyDown(KEY_SPACE) && !isJumping)
 	{
@@ -57,7 +57,6 @@ void Stickman::Update()
 
 	if (position.x > GetScreenWidth() - 10)
 		position.x = GetScreenWidth() - 10;
-
 }
 
 void Stickman::Draw()
@@ -70,6 +69,7 @@ void Stickman::Draw()
 	// Body
 	DrawLine(position.x, position.y + 10, position.x, position.y + 30, color);
 
+	// Eye
 	if (isLookingRight)
 		DrawCircle(position.x + 3, position.y - 2, 2, BLACK);
 	else

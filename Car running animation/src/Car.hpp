@@ -24,7 +24,6 @@ public:
 	void Draw() const;
 
 private:
-
 	vector<Skidmark> skidmarks;
 	Vector2 position;
 	Vector2 size;
@@ -50,5 +49,4 @@ private:
 	void UpdateSkidmarks();
 	void UpdatePhysics(float deltaTime);
 	bool IsDrifting() const;
-
 };

@@ -47,7 +47,7 @@ void Game::Run()
 				car.Draw();
 			}
 			EndMode2D();
-			DrawFPS(10, 10);
+			DrawFPS(0, 10);
 		}
 		EndDrawing();
 	}

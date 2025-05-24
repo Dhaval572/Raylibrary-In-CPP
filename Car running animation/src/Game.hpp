@@ -1,11 +1,12 @@
 #pragma once
 #include "Car.hpp"
 
-class Game {
+class Game
+{
 public:
-    void Run();
+	void Run();
 
 private:
-    static constexpr size_t SCREEN_WIDTH = 1200;
-    static constexpr size_t SCREEN_HEIGHT = 700;
+	static constexpr size_t SCREEN_WIDTH = 1200;
+	static constexpr size_t SCREEN_HEIGHT = 700;
 };

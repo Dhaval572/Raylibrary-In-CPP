@@ -39,6 +39,7 @@ private:
 	float maxSteering;
 	float steerBackSpeed;
 	float driftBias;
+	bool boost;
 
 	Vector2 CalculateTirePosition(float offsetAngle) const;
 	void InitializeCarProperties();

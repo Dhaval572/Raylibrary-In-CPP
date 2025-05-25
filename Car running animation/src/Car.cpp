@@ -56,14 +56,19 @@ void Car::HandleInput(float deltaTime)
 {
 	if (IsKeyDown(KEY_W))
 	{
-		speed = min(speed + acceleration * deltaTime, maxSpeed);
+		if (IsKeyDown(KEY_LEFT_SHIFT))
+		{
+			speed = min(speed + acceleration * 2.0f * deltaTime, maxSpeed * 2.0f);
+		}
+		else
+		{
+			speed = min(speed + acceleration * deltaTime, maxSpeed);
+		}
 	}
-
 	else if (IsKeyDown(KEY_S))
 	{
 		speed = max(speed - acceleration * deltaTime, -maxSpeed);
 	}
-
 	else
 	{
 		speed *= slowdown;
@@ -73,7 +78,6 @@ void Car::HandleInput(float deltaTime)
 	{
 		steering = max(steering - steeringSpeed * deltaTime * abs(speed), -maxSteering);
 	}
-
 	else if (IsKeyDown(KEY_D))
 	{
 		steering = min(steering + steeringSpeed * deltaTime * abs(speed), maxSteering);

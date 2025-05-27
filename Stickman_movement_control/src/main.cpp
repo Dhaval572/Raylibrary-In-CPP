@@ -3,7 +3,7 @@
 
 int main()
 {
-    InitWindow(600, 500, " ");
+    InitWindow(600, 500, "Control stickman");
 
     Stickman player({10, 355}, MAGENTA);
 

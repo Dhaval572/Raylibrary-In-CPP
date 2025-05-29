@@ -16,6 +16,7 @@ class Stickman
     bool isMoving;
     bool isLookingRight;
     bool isJumping;
+    bool isSneaking;
 
 public:
     Stickman(Vector2 pos, Color col);

@@ -11,24 +11,52 @@ Stickman::Stickman(Vector2 pos, Color col)
 void Stickman::Update()
 {
 	isMoving = false;
+	isSneaking = false;
+
+	if (IsKeyDown(KEY_DOWN))
+	{
+		isSneaking = true;
+		if (!isJumping)
+		{
+			position.y += 8.0f;
+			if (position.y > groundLevel + 8.0f)
+				position.y = groundLevel + 8.0f;
+		}
+	}
+	else if (!isJumping)
+	{
+		position.y = groundLevel;
+	}
 
 	if (IsKeyDown(KEY_RIGHT))
 	{
 		isLookingRight = true;
-		position.x += 3.0f;
 		isMoving = true;
+
+		if (isSneaking)
+			position.x += 2.0f;
+		else
+			position.x += 3.0f;
 	}
+
 	if (IsKeyDown(KEY_LEFT))
 	{
 		isLookingRight = false;
-		position.x -= 3.0f;
 		isMoving = true;
+
+		if (isSneaking)
+			position.x -= 2.0f;
+		else
+			position.x -= 3.0f;
 	}
+
+	if (IsKeyDown(KEY_LEFT) && IsKeyDown(KEY_RIGHT))
+		isMoving = false;
 
 	if (isMoving)
 		walkTime += GetFrameTime();
 
-	if (IsKeyDown(KEY_SPACE) && !isJumping)
+	if (IsKeyPressed(KEY_SPACE) && !isJumping)
 	{
 		isJumping = true;
 		verticalVelocity = JUMP_VELOCITY;
@@ -75,7 +103,7 @@ void Stickman::Draw()
 	else
 		DrawCircle(position.x - 3, position.y - 2, 2, BLACK);
 
-	if (isJumping)
+	if (isJumping && !isSneaking)
 	{
 		// Arms raised higher when jumping
 		DrawLine(position.x, position.y + 15, position.x - 15, position.y + 10, color);
@@ -84,6 +112,16 @@ void Stickman::Draw()
 		// Legs bent upward for jump pose
 		DrawLine(position.x, position.y + 30, position.x - 10, position.y + 35, color);
 		DrawLine(position.x, position.y + 30, position.x + 10, position.y + 35, color);
+	}
+	else if (isSneaking && !isJumping)
+	{
+		// Arms bent down for sneaking pose
+		DrawLine(position.x, position.y + 15, position.x - 10, position.y + 25, color);
+		DrawLine(position.x, position.y + 15, position.x + 10, position.y + 25, color);
+
+		// Legs spread wider for sneaking pose
+		DrawLine(position.x, position.y + 30, position.x - 15 + legMove, position.y + 45, color);
+		DrawLine(position.x, position.y + 30, position.x + 15 - legMove, position.y + 45, color);
 	}
 	else
 	{

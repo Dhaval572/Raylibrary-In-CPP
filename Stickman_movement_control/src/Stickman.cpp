@@ -34,7 +34,7 @@ void Stickman::Update()
 		isMoving = true;
 
 		if (isSneaking)
-			position.x += 2.0f;
+			position.x += 1.0f;
 		else
 			position.x += 3.0f;
 	}
@@ -45,7 +45,7 @@ void Stickman::Update()
 		isMoving = true;
 
 		if (isSneaking)
-			position.x -= 2.0f;
+			position.x -= 1.0f;
 		else
 			position.x -= 3.0f;
 	}

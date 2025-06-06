@@ -6,6 +6,7 @@ Stickman::Stickman(Vector2 pos, Color col)
 	walkTime = false;
 	isJumping = false;
 	groundLevel = position.y;
+	currHealth = MAX_HEALTH_POINT;
 }
 
 void Stickman::Update()
@@ -20,7 +21,9 @@ void Stickman::Update()
 		{
 			position.y += 8.0f;
 			if (position.y > groundLevel + 8.0f)
+			{
 				position.y = groundLevel + 8.0f;
+			}
 		}
 	}
 	else if (!isJumping)
@@ -136,4 +139,31 @@ void Stickman::Draw()
 
 	// Ground
 	DrawRectangle(0, 400, GetScreenWidth(), 100, GREEN);
+
+	DrawHealthBar();
+}
+
+void Stickman::DrawHealthBar()
+{
+	const int barX = 10, barY = 10, barWidth = 200, barHeight = 20;
+
+	// Convert _Float16 to float for drawing
+	float healthPercent = (float)currHealth / (float)MAX_HEALTH_POINT;
+
+	// Clamp to 0.0 – 1.0
+	if (healthPercent < 0.0f)
+		healthPercent = 0.0f;
+	if (healthPercent > 1.0f)
+		healthPercent = 1.0f;
+
+	// Background
+	DrawRectangle(barX, barY, barWidth, barHeight, WHITE);
+
+	Color healthColor = (healthPercent > 0.3f) ? GREEN : RED;
+
+	// Fill bar
+	DrawRectangle(barX, barY, (int)(barWidth * healthPercent), barHeight, healthColor);
+
+	// Outline
+	DrawRectangleLines(barX, barY, barWidth, barHeight, BLACK);
 }

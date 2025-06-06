@@ -26,7 +26,7 @@ int main()
     InitAudioDevice();
     SetTargetFPS(60); // Setting FPS
 
-    Game game; // Creating object
+    Game game; // Creating objectn
 
     while (!WindowShouldClose())
     {

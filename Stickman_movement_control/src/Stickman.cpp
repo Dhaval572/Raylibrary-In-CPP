@@ -13,7 +13,7 @@ void Stickman::Update()
 	isMoving = false;
 	isSneaking = false;
 
-	if (IsKeyDown(KEY_DOWN))
+	if (IsKeyDown(KEY_S))
 	{
 		isSneaking = true;
 		if (!isJumping)
@@ -28,7 +28,7 @@ void Stickman::Update()
 		position.y = groundLevel;
 	}
 
-	if (IsKeyDown(KEY_RIGHT))
+	if (IsKeyDown(KEY_D))
 	{
 		isLookingRight = true;
 		isMoving = true;
@@ -39,7 +39,7 @@ void Stickman::Update()
 			position.x += 3.0f;
 	}
 
-	if (IsKeyDown(KEY_LEFT))
+	if (IsKeyDown(KEY_A))
 	{
 		isLookingRight = false;
 		isMoving = true;
@@ -50,13 +50,13 @@ void Stickman::Update()
 			position.x -= 3.0f;
 	}
 
-	if (IsKeyDown(KEY_LEFT) && IsKeyDown(KEY_RIGHT))
+	if (IsKeyDown(KEY_A) && IsKeyDown(KEY_D))
 		isMoving = false;
 
 	if (isMoving)
 		walkTime += GetFrameTime();
 
-	if (IsKeyPressed(KEY_SPACE) && !isJumping)
+	if (IsKeyPressed(KEY_W) && !isJumping)
 	{
 		isJumping = true;
 		verticalVelocity = JUMP_VELOCITY;

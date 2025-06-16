@@ -167,5 +167,5 @@ void Fire::Draw()
 	EndBlendMode();
 
 	// Debug coll rect
-	DrawRectangleLinesEx(Rect(), 1, RED);
+	// DrawRectangleLinesEx(Rect(), 1, RED);
 }

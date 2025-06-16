@@ -7,15 +7,17 @@
 class Game
 {
 public:
-	Game();		// Constructor
-	~Game();	// Destructor
-	void Run(); // Main game loop
+	Game();
+	~Game();
+	void Run();
 
 private:
-	void Init();   // Window and setup
-	void Update(); // Per-frame logic
-	void Draw();   // Per-frame rendering
+	void Init();
+	void Update();
+	void Draw();
+	void GameOver();
 
 	Stickman player;
 	Fire fire;
+	bool isGameOver = false;
 };

@@ -2,44 +2,70 @@
 #include "raylib.h"
 
 Game::Game()
-    : player({10, 355}, MAGENTA), fire({400, 399}) // Initialize player and fire
+	: player({10, 355}, MAGENTA), fire({400, 399})
 {
-    Init();
+	Init();
 }
 
 Game::~Game()
 {
-    CloseWindow(); // Clean up
+	CloseWindow();
 }
 
 void Game::Init()
 {
-    InitWindow(600, 500, "Control stickman");
-    SetTargetFPS(60);
+	InitWindow(600, 500, "Control stickman");
+	SetTargetFPS(60);
 }
 
 void Game::Run()
 {
-    while (!WindowShouldClose())
-    {
-        Update();
+	while (!WindowShouldClose())
+	{
+		Update();
 
-        BeginDrawing();
-        ClearBackground(BLACK);
-        Draw();
-        EndDrawing();
-    }
+		BeginDrawing();
+		ClearBackground(BLACK);
+		Draw();
+		EndDrawing();
+	}
 }
 
 void Game::Update()
 {
-    player.Update();
-    fire.Update(GetFrameTime());
-	player.TakeDamage(fire); 
+	if (isGameOver)
+		return;
+
+	if (isGameOver && IsKeyPressed(KEY_R))
+	{
+		Game();
+	}
+
+	if (!player.IsAlive())
+	{
+		isGameOver = true;
+	}
+
+	player.Update();
+	fire.Update(GetFrameTime());
+	player.TakeDamage(fire);
 }
 
 void Game::Draw()
 {
-    player.Draw();
-    fire.Draw();
+	if (isGameOver)
+	{
+		GameOver();
+	}
+	else
+	{
+		player.Draw();
+		fire.Draw();
+	}
+}
+
+void Game::GameOver()
+{
+	ClearBackground(BLACK);
+	DrawText("Game Over! Press R to Restart: ", 150, 250, 20, RED);
 }

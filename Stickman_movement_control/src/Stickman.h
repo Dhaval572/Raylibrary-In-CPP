@@ -21,11 +21,14 @@ class Stickman
     bool isLookingRight;
     bool isJumping;
     bool isSneaking;
+    bool isAlive;
 
     void DrawHealthBar();
     Rectangle Rect() const;
 
 public:
+    bool IsAlive() const;
+
     void TakeDamage(const Fire &fire);
     Stickman(Vector2 pos, Color col);
     void Update();

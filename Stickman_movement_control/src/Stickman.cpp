@@ -5,12 +5,14 @@ Stickman::Stickman(Vector2 pos, Color col)
 {
 	walkTime = 0.0f;
 	isJumping = false;
+	isAlive = true;
 	groundLevel = position.y;
 	currHealth = MAX_HEALTH_POINT;
 }
 
 void Stickman::Update()
 {
+	if(currHealth == 0) isAlive = false;
 
 	isMoving = false;
 	isSneaking = false;
@@ -94,6 +96,11 @@ void Stickman::Update()
 		damageCooldown -= GetFrameTime();
 }
 
+bool Stickman::IsAlive() const
+{
+	return isAlive;
+}
+
 void Stickman::Draw()
 {
 	float legMove = isMoving ? sin(walkTime * 8) * 5 : 0;
@@ -146,8 +153,8 @@ void Stickman::Draw()
 
 	DrawHealthBar();
 
-	// Debug rectangle coll
-	DrawRectangleLinesEx(Rect(), 1, RED);
+	// Debug 
+	// DrawRectangleLinesEx(Rect(), 1, RED);
 }
 
 Rectangle Stickman::Rect() const
@@ -167,7 +174,9 @@ void Stickman::TakeDamage(const Fire &fire)
 		currHealth -= 10;
 
 		if (currHealth < 0)
+		{
 			currHealth = 0;
+		}
 
 		damageCooldown = 1.0f;
 	}
@@ -182,7 +191,10 @@ void Stickman::DrawHealthBar()
 
 	// Clamp to 0.0 – 1.0
 	if (healthPercent < 0.0f)
+	{
 		healthPercent = 0.0f;
+	}
+
 	if (healthPercent > 1.0f)
 		healthPercent = 1.0f;
 

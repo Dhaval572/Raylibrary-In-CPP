@@ -1,9 +1,9 @@
 #include "Game.h"
-#include "raylib.h"
 
 Game::Game()
-	: player({10, 355}, MAGENTA), fire({400, 399})
 {
+	player.Reset({10, 355}, MAGENTA);
+	fire.Reset({400, 399});
 	Init();
 }
 
@@ -31,15 +31,23 @@ void Game::Run()
 	}
 }
 
+void Game::Reset()
+{
+	player.Reset({10, 355}, MAGENTA);
+	fire.Reset({400, 399});
+	isGameOver = false;
+}
+
 void Game::Update()
 {
-	if (isGameOver)
-		return;
-
 	if (isGameOver && IsKeyPressed(KEY_R))
 	{
-		Game();
+		Reset();
+		return;
 	}
+
+	if (isGameOver)
+		return;
 
 	if (!player.IsAlive())
 	{

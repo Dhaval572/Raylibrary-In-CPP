@@ -27,8 +27,8 @@ private:
 	Color GetFireColor(float age_ratio);
 
 public:
-	Fire(Vector2 emitterPos);
 
+	void Reset(Vector2 emitterPos);
 	void Update(float dt);
 	void Draw();
 	Rectangle Rect() const;

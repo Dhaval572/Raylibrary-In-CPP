@@ -1,6 +1,5 @@
 #pragma once
 
-#include <raylib.h>
 #include "Fire_partical.h"
 #include "Stickman.h"
 
@@ -16,6 +15,7 @@ private:
 	void Update();
 	void Draw();
 	void GameOver();
+	void Reset();
 
 	Stickman player;
 	Fire fire;

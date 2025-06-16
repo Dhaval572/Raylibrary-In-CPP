@@ -1,10 +1,12 @@
 #include "Fire_partical.h"
 
-Fire::Fire(Vector2 emitterPos)
-	: emitter(emitterPos), spawnTimer(0.0f)
+void Fire::Reset(Vector2 emitterPos)
 {
-	for (auto &p : particles)
-		p.alive = false;
+	emitter = emitterPos;
+	spawnTimer = 0.0f;
+
+	for(auto &p : particles)
+		p.alive = true;
 }
 
 void Fire::SpawnParticle(Particle &p)

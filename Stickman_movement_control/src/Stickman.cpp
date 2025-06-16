@@ -1,14 +1,21 @@
 #include "Stickman.h"
 
-Stickman::Stickman(Vector2 pos, Color col)
-	: position(pos), color(col), walkTime(0.0f)
+void Stickman::Reset(Vector2 pos, Color col)
 {
-	walkTime = 0.0f;
-	isJumping = false;
-	isAlive = true;
-	groundLevel = position.y;
-	currHealth = MAX_HEALTH_POINT;
+    position = pos;
+    color = col;
+    walkTime = 0.0f;
+    isJumping = false;
+    isAlive = true;
+    groundLevel = pos.y;
+    currHealth = MAX_HEALTH_POINT;
+    isSneaking = false;
+    isMoving = false;
+    isLookingRight = true;
+    verticalVelocity = 0.0f;
+    damageCooldown = 0.0f;
 }
+
 
 void Stickman::Update()
 {

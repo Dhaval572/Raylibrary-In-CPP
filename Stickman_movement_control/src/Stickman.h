@@ -1,6 +1,4 @@
 #pragma once
-#include <cmath>
-#include <raylib.h>
 #include "Fire_partical.h"
 
 constexpr float JUMP_VELOCITY = -9.0f;
@@ -11,7 +9,7 @@ constexpr _Float16 MAX_HEALTH_POINT = 100;
 class Stickman
 {
     Vector2 position;
-    const Color color;
+    Color color;
     float walkTime;
     float verticalVelocity;
     float groundLevel;
@@ -27,10 +25,9 @@ class Stickman
     Rectangle Rect() const;
 
 public:
-    bool IsAlive() const;
-
     void TakeDamage(const Fire &fire);
-    Stickman(Vector2 pos, Color col);
     void Update();
     void Draw();
+    void Reset(Vector2 pos, Color col);
+    bool IsAlive() const;
 };

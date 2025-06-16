@@ -31,6 +31,5 @@ public:
 
 	void Update(float dt);
 	void Draw();
-	void SetPosition(Vector2 pos) { emitter = pos; }
 	Rectangle Rect() const;
 };

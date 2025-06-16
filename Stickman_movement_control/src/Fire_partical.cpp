@@ -26,12 +26,11 @@ void Fire::SpawnParticle(Particle &p)
 
 Rectangle Fire::Rect() const
 {
-	// Covers full spread of particles + upward travel range
 	return Rectangle{
-		emitter.x - 20, // extend horizontally
-		emitter.y - 60, // allow space for upward movement
-		40,				// total width
-		60				// total height: from below emitter to above
+		emitter.x - 20, 
+		emitter.y - 60, 
+		40,				
+		60				
 	};
 }
 

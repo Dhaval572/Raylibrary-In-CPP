@@ -1,25 +1,8 @@
-#include <raylib.h>
-#include "Stickman.hpp"
+#include "Game.h"
 
 int main()
 {
-    InitWindow(600, 500, "Control stickman");
-
-    Stickman player({10, 355}, MAGENTA);
-
-    SetTargetFPS(60);
-    while (!WindowShouldClose())
-    {
-        player.Update();
-
-        BeginDrawing();
-        ClearBackground(RAYWHITE);
-
-        player.Draw();
-
-        EndDrawing();
-    }
-
-    CloseWindow();
+    Game game;
+    game.Run();
     return 0;
 }

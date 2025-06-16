@@ -1,9 +1,9 @@
-#include "Stickman.hpp"
+#include "Stickman.h"
 
 Stickman::Stickman(Vector2 pos, Color col)
 	: position(pos), color(col), walkTime(0.0f)
 {
-	walkTime = false;
+	walkTime = 0.0f;
 	isJumping = false;
 	groundLevel = position.y;
 	currHealth = MAX_HEALTH_POINT;
@@ -11,6 +11,7 @@ Stickman::Stickman(Vector2 pos, Color col)
 
 void Stickman::Update()
 {
+
 	isMoving = false;
 	isSneaking = false;
 
@@ -88,6 +89,9 @@ void Stickman::Update()
 
 	if (position.x > GetScreenWidth() - 10)
 		position.x = GetScreenWidth() - 10;
+
+	if (damageCooldown > 0.0f)
+		damageCooldown -= GetFrameTime();
 }
 
 void Stickman::Draw()
@@ -138,9 +142,35 @@ void Stickman::Draw()
 	}
 
 	// Ground
-	DrawRectangle(0, 400, GetScreenWidth(), 100, GREEN);
+	DrawRectangle(0, 400, GetScreenWidth(), 100, GRAY);
 
 	DrawHealthBar();
+
+	// Debug rectangle coll
+	DrawRectangleLinesEx(Rect(), 1, RED);
+}
+
+Rectangle Stickman::Rect() const
+{
+	return Rectangle{
+		position.x - 10, // left
+		position.y - 10, // top of head
+		20,				 // width
+		55				 // total height: head + body + legs
+	};
+}
+
+void Stickman::TakeDamage(const Fire &fire)
+{
+	if (damageCooldown <= 0.0f && CheckCollisionRecs(this->Rect(), fire.Rect()))
+	{
+		currHealth -= 10;
+
+		if (currHealth < 0)
+			currHealth = 0;
+
+		damageCooldown = 1.0f;
+	}
 }
 
 void Stickman::DrawHealthBar()

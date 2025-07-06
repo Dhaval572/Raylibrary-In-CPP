@@ -31,9 +31,13 @@ Vector2 Car::GetPosition() const
 
 Vector2 Car::CalculateTirePosition(float offsetAngle) const
 {
-	const float radians = (angle + offsetAngle) * DEG2RAD;
-	return {position.x + (size.y / 2.6f) * cos(radians),
-			position.y + (size.y / 2.6f) * sin(radians)};
+	float radians = (angle + offsetAngle) * DEG2RAD;
+
+	return 
+	{
+		position.x + (size.y / 2.6f) * cos(radians),
+		position.y + (size.y / 2.6f) * sin(radians)
+	};
 }
 
 void Car::InitializeCarProperties()
@@ -91,8 +95,16 @@ void Car::DrawCar() const
 	const Rectangle destRect = {position.x, position.y, size.x, size.y};
 	const Vector2 origin = {size.x / 2, size.y / 2};
 
-	DrawTexturePro(texture, {0, 0, (float)texture.width, (float)texture.height},
-				   destRect, origin, angle, WHITE);
+	DrawTexturePro
+	(
+		texture, 
+		{
+			0, 0, 
+			static_cast<float>(texture.width), 
+			static_cast<float>(texture.height)
+		},
+		destRect, origin, angle, WHITE
+	);
 }
 
 void Car::DrawSkidmarks() const
@@ -106,20 +118,30 @@ void Car::DrawSkidmarks() const
 
 void Car::RemoveOldSkidmarks()
 {
-	const double currentTime = GetTime();
-	skidmarks.erase(remove_if(skidmarks.begin(), skidmarks.end(),
-							  [currentTime](const auto &skidmark)
-							  {
-								  return currentTime > skidmark.creationTime + SKIDMARK_LIFETIME;
-							  }),
-					skidmarks.end());
+	double currentTime = GetTime();
+	skidmarks.erase
+	(
+		remove_if
+		(
+			skidmarks.begin(), skidmarks.end(),[currentTime](const auto &skidmark)
+			{
+			  return currentTime > skidmark.creationTime + SKIDMARK_LIFETIME;
+			}
+		),
+		skidmarks.end()
+	);
 }
 
 void Car::UpdateSkidmarks()
 {
 	if (IsDrifting())
 	{
-		skidmarks.push_back({CalculateTirePosition(-240), CalculateTirePosition(-300), GetTime()});
+		skidmarks.push_back
+		(
+			{
+				CalculateTirePosition(-240), CalculateTirePosition(-300), GetTime()
+			}
+		);
 	}
 	RemoveOldSkidmarks();
 }
@@ -129,7 +151,7 @@ void Car::UpdatePhysics(float deltaTime)
 	angle += steering;
 	driftAngle = (angle + driftAngle * driftBias) / (1 + driftBias);
 
-	const float radians = (angle - 90) * DEG2RAD;
+	float radians = (angle - 90) * DEG2RAD;
 	position.x += speed * deltaTime * cos(radians);
 	position.y += speed * deltaTime * sin(radians);
 }

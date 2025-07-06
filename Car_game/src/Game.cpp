@@ -6,7 +6,14 @@ void Game::Run()
 	SetTargetFPS(60);
 
 	const Texture2D soilTexture = LoadTexture("Images/Soil_Tile.png");
-	Car car({SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f}, "Images/Car_1_01.png");
+	Car car
+	(
+		{
+			SCREEN_WIDTH / 2.0f, 
+			SCREEN_HEIGHT / 2.0f
+		}, 
+		"Images/Car_1_01.png"
+	);
 
 	Camera2D camera = {0};
 	camera.offset = {SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f};

@@ -7,6 +7,6 @@ public:
 	void Run();
 
 private:
-	static constexpr size_t SCREEN_WIDTH = 1200;
-	static constexpr size_t SCREEN_HEIGHT = 700;
+	static constexpr int SCREEN_WIDTH = 1200;
+	static constexpr int SCREEN_HEIGHT = 700;
 };

@@ -126,7 +126,7 @@ void Car::RemoveOldSkidmarks()
 		(
 			skidmarks.begin(), skidmarks.end(),[currentTime](const auto &skidmark)
 			{
-			  return currentTime > skidmark.creationTime + SKIDMARK_LIFETIME;
+			  	return currentTime > skidmark.creationTime + SKIDMARK_LIFETIME;
 			}
 		),
 		skidmarks.end()

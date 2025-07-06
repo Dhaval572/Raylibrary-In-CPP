@@ -30,10 +30,10 @@ void Game::Run()
 			BeginMode2D(camera);
 			{
 				// Calculate visible tile indices
-				const int startX = static_cast<int>((camera.target.x - halfWidth) / tileWidth) - 1;
-				const int endX = static_cast<int>((camera.target.x + halfWidth) / tileWidth) + 1;
-				const int startY = static_cast<int>((camera.target.y - halfHeight) / tileHeight) - 1;
-				const int endY = static_cast<int>((camera.target.y + halfHeight) / tileHeight) + 1;
+				int startX = static_cast<int>((camera.target.x - halfWidth) / tileWidth) - 1;
+				int endX = static_cast<int>((camera.target.x + halfWidth) / tileWidth) + 1;
+				int startY = static_cast<int>((camera.target.y - halfHeight) / tileHeight) - 1;
+				int endY = static_cast<int>((camera.target.y + halfHeight) / tileHeight) + 1;
 
 				// Draw visible tiles
 				for (int x = startX; x <= endX; ++x)

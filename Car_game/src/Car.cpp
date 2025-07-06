@@ -1,7 +1,8 @@
 #include "Car.hpp"
 
 Car::Car(Vector2 startPosition, const string &texturePath)
-	: position(startPosition), texture(LoadTexture(texturePath.c_str()))
+	: position(startPosition),
+	  texture(LoadTexture(texturePath.c_str()))
 {
 	InitializeCarProperties();
 }

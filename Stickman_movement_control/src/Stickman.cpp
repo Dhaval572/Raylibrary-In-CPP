@@ -19,7 +19,8 @@ void Stickman::Reset(Vector2 pos, Color col)
 
 void Stickman::Update()
 {
-	if(currHealth == 0) isAlive = false;
+	if(currHealth == 0) 
+		isAlive = false;
 
 	isMoving = false;
 	isSneaking = false;
@@ -191,10 +192,9 @@ void Stickman::TakeDamage(const Fire &fire)
 
 void Stickman::DrawHealthBar()
 {
-	const int barX = 10, barY = 10, barWidth = 200, barHeight = 20;
+	const int barX = 10, barY = 10, barWidth = 200, barHeight = 20; 
 
-	// Convert _Float16 to float for drawing
-	float healthPercent = (float)currHealth / (float)MAX_HEALTH_POINT;
+	float healthPercent = currHealth / MAX_HEALTH_POINT;
 
 	// Clamp to 0.0 – 1.0
 	if (healthPercent < 0.0f)

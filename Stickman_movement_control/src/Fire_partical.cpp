@@ -3,7 +3,7 @@
 void Fire::Reset(Vector2 emitterPos)
 {
 	emitter = emitterPos;
-	spawnTimer = 0.0f;
+	spawn_timer = 0.0f;
 
 	for(auto &p : particles)
 		p.alive = true;
@@ -28,7 +28,8 @@ void Fire::SpawnParticle(Particle &p)
 
 Rectangle Fire::Rect() const
 {
-	return Rectangle{
+	return Rectangle
+	{
 		emitter.x - 20, 
 		emitter.y - 60, 
 		40,				
@@ -79,10 +80,10 @@ Color Fire::GetFireColor(float age_ratio)
 void Fire::Update(float dt)
 {
 	// Spawn particles more frequently for density
-	spawnTimer += dt;
-	if (spawnTimer >= 0.015f)
+	spawn_timer += dt;
+	if (spawn_timer >= 0.015f)
 	{
-		spawnTimer = 0.0f;
+		spawn_timer = 0.0f;
 
 		// Find dead particle to respawn
 		for (auto &p : particles)

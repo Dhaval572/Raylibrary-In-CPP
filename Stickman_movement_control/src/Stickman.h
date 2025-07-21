@@ -4,7 +4,7 @@
 constexpr float JUMP_VELOCITY = -9.0f;
 constexpr float GRAVITY = 0.6f;
 constexpr float TERMINAL_VELOCITY = 15.0f;
-constexpr _Float16 MAX_HEALTH_POINT = 100;
+constexpr float MAX_HEALTH_POINT = 100;
 
 class Stickman
 {
@@ -14,7 +14,7 @@ class Stickman
     float verticalVelocity;
     float groundLevel;
     float damageCooldown;
-    _Float16 currHealth;
+    float currHealth;
     bool isMoving;
     bool isLookingRight;
     bool isJumping;

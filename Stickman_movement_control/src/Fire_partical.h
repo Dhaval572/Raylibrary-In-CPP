@@ -20,7 +20,7 @@ class Fire
 private:
 	std::array<Particle, 80> particles;
 	Vector2 emitter;
-	float spawnTimer;
+	float spawn_timer;
 
 	void SpawnParticle(Particle &p);
 	float Lerp(float a, float b, float t);

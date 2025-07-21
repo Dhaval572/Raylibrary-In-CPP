@@ -49,18 +49,31 @@ void Character::Draw()
 {
 	const Texture2D &tex = frames[currentFrame];
 
-	DrawTexturePro(
+	DrawTexturePro
+	(
 		tex,
-		(Rectangle){0.0f, 0.0f,
-					!isFacingRight ? -(float)tex.width : (float)tex.width,
-					(float)tex.height},
-		(Rectangle){position.x, position.y,
-					(float)tex.width,
-					(float)tex.height},
-		(Vector2){(float)tex.width * 0.5f,
-				  (float)tex.height * 0.5f},
+		(Rectangle)
+		{
+			0.0f, 0.0f,
+			!isFacingRight ? -(static_cast<float>(tex.width)) : static_cast<float>(tex.width),
+			static_cast<float>(tex.height)
+		},
+
+		(Rectangle)
+		{
+			position.x, position.y,
+			static_cast<float>(tex.width),
+			static_cast<float>(tex.height)
+		},
+
+		(Vector2)
+		{
+			static_cast<float>(tex.width) * 0.5f,
+			static_cast<float>(tex.height) * 0.5f
+		},
 		0.0f,
-		WHITE);
+		WHITE
+	);
 }
 
 Character::~Character()

@@ -194,9 +194,7 @@ void Stickman::TakeDamageFromFire(const Fire &fire)
 		currHealth -= 10;
 
 		if (currHealth < 0)
-		{
 			currHealth = 0;
-		}
 
 		damageCooldown = 1.0f;
 	}

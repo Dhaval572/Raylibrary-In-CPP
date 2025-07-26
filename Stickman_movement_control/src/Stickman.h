@@ -22,8 +22,8 @@ class Stickman
     bool isSneaking;
     bool isAlive;
 
-    void DrawHealthBar();
     Rectangle Rect() const;
+    void DrawHealthBar();
 
 public:
     void TakeDamageFromFire(const Fire &fire);

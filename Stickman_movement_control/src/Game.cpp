@@ -50,9 +50,7 @@ void Game::Update()
 		return;
 
 	if (!player.IsAlive())
-	{
 		isGameOver = true;
-	}
 
 	player.Update();
 	fire.Update(GetFrameTime());

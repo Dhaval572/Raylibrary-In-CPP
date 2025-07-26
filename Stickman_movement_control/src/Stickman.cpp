@@ -32,9 +32,7 @@ void Stickman::Update()
 		{
 			position.y += 8.0f;
 			if (position.y > groundLevel + 8.0f)
-			{
 				position.y = groundLevel + 8.0f;
-			}
 		}
 	}
 	else if (!isJumping)
@@ -154,8 +152,20 @@ void Stickman::Draw()
 		DrawLine(position.x, position.y + 15, position.x + 10, position.y + 25, color);
 
 		// Legs spread wider for sneaking pose
-		DrawLine(position.x, position.y + 30, position.x - 15 + legMove, position.y + 45, color);
-		DrawLine(position.x, position.y + 30, position.x + 15 - legMove, position.y + 45, color);
+		DrawLine
+		(
+			position.x, 
+			position.y + 30, 
+			position.x - 15 + legMove, 
+			position.y + 45, color
+		);
+		DrawLine
+		(
+			position.x, 
+			position.y + 30, 
+			position.x + 15 - legMove, 
+			position.y + 45, color
+		);
 	}
 	else
 	{
@@ -164,8 +174,20 @@ void Stickman::Draw()
 		DrawLine(position.x, position.y + 15, position.x + 10, position.y + 20, color);
 
 		// Legs ( animated when moving )
-		DrawLine(position.x, position.y + 30, position.x - 5 + legMove, position.y + 45, color);
-		DrawLine(position.x, position.y + 30, position.x + 5 - legMove, position.y + 45, color);
+		DrawLine
+		(
+			position.x, 
+			position.y + 30, 
+			position.x - 5 + legMove, 
+			position.y + 45, color
+		);
+		DrawLine
+		(
+			position.x, 
+			position.y + 30, 
+			position.x + 5 - legMove, 
+			position.y + 45, color
+		);
 	}
 
 	// Ground
@@ -179,7 +201,8 @@ void Stickman::Draw()
 
 Rectangle Stickman::Rect() const
 {
-	return Rectangle{
+	return Rectangle
+	{
 		position.x - 10, // left
 		position.y - 10, // top of head
 		20,				 // width
@@ -203,21 +226,17 @@ void Stickman::TakeDamageFromFire(const Fire &fire)
 void Stickman::DrawHealthBar()
 {
 	const int barX = 10, barY = 10, barWidth = 200, barHeight = 20;
-
 	float healthPercent = displayHealth / MAX_HEALTH_POINT;
 
 	// Clamp to 0.0 – 1.0
 	if (healthPercent < 0.0f)
-	{
 		healthPercent = 0.0f;
-	}
 
 	if (healthPercent > 1.0f)
 		healthPercent = 1.0f;
 
 	// Background
 	DrawRectangle(barX, barY, barWidth, barHeight, WHITE);
-
 	Color healthColor = (healthPercent > 0.3f) ? GREEN : RED;
 
 	// Fill bar

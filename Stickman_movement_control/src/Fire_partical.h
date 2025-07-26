@@ -8,10 +8,10 @@ struct Particle
 {
 	Vector2 position;
 	Vector2 velocity;
+	Color color;
 	float lifetime;
 	float age;
 	float size;
-	Color color;
 	bool alive;
 };
 
@@ -22,14 +22,14 @@ private:
 	Vector2 emitter;
 	float spawn_timer;
 
-	void SpawnParticle(Particle &p);
-	float Lerp(float a, float b, float t);
 	Color GetFireColor(float age_ratio);
+	float Lerp(float a, float b, float t);
+	void SpawnParticle(Particle &p);
 
 public:
 
+	Rectangle Rect() const;
 	void Reset(Vector2 emitterPos);
 	void Update(float dt);
 	void Draw();
-	Rectangle Rect() const;
 };

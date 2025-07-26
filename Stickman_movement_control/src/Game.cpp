@@ -56,7 +56,7 @@ void Game::Update()
 
 	player.Update();
 	fire.Update(GetFrameTime());
-	player.TakeDamage(fire);
+	player.TakeDamageFromFire(fire);
 }
 
 void Game::Draw()

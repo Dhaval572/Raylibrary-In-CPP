@@ -15,6 +15,7 @@ class Stickman
     float groundLevel;
     float damageCooldown;
     float currHealth;
+    float displayHealth;
     bool isMoving;
     bool isLookingRight;
     bool isJumping;
@@ -25,8 +26,9 @@ class Stickman
     Rectangle Rect() const;
 
 public:
-    void TakeDamage(const Fire &fire);
+    void TakeDamageFromFire(const Fire &fire);
     void Update();
+    void SmoothHealthTransition();
     void Draw();
     void Reset(Vector2 pos, Color col);
     bool IsAlive() const;

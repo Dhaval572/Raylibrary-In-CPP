@@ -2,24 +2,24 @@
 
 void Stickman::Reset(Vector2 pos, Color col)
 {
-    position = pos;
-    color = col;
-    walkTime = 0.0f;
-    isJumping = false;
-    isAlive = true;
-    groundLevel = pos.y;
-    currHealth = MAX_HEALTH_POINT;
-    isSneaking = false;
-    isMoving = false;
-    isLookingRight = true;
-    verticalVelocity = 0.0f;
-    damageCooldown = 0.0f;
+	position = pos;
+	color = col;
+	walkTime = 0.0f;
+	isJumping = false;
+	isAlive = true;
+	groundLevel = pos.y;
+	currHealth = MAX_HEALTH_POINT;
+	displayHealth = MAX_HEALTH_POINT;
+	isSneaking = false;
+	isMoving = false;
+	isLookingRight = true;
+	verticalVelocity = 0.0f;
+	damageCooldown = 0.0f;
 }
-
 
 void Stickman::Update()
 {
-	if(currHealth == 0) 
+	if (currHealth == 0)
 		isAlive = false;
 
 	isMoving = false;
@@ -93,7 +93,6 @@ void Stickman::Update()
 		}
 	}
 
-	// Boundary
 	if (position.x < 10)
 		position.x = 10; // 10 is head radius
 
@@ -102,6 +101,19 @@ void Stickman::Update()
 
 	if (damageCooldown > 0.0f)
 		damageCooldown -= GetFrameTime();
+
+	SmoothHealthTransition();
+}
+
+void Stickman::SmoothHealthTransition()
+{
+	float interpSpeed = 25.0f; 
+	if (displayHealth > currHealth)
+	{
+		displayHealth -= interpSpeed * GetFrameTime();
+		if (displayHealth < currHealth)
+			displayHealth = currHealth;
+	}
 }
 
 bool Stickman::IsAlive() const
@@ -161,7 +173,7 @@ void Stickman::Draw()
 
 	DrawHealthBar();
 
-	// Debug 
+	// Debug
 	// DrawRectangleLinesEx(Rect(), 1, RED);
 }
 
@@ -175,7 +187,7 @@ Rectangle Stickman::Rect() const
 	};
 }
 
-void Stickman::TakeDamage(const Fire &fire)
+void Stickman::TakeDamageFromFire(const Fire &fire)
 {
 	if (damageCooldown <= 0.0f && CheckCollisionRecs(this->Rect(), fire.Rect()))
 	{
@@ -192,9 +204,9 @@ void Stickman::TakeDamage(const Fire &fire)
 
 void Stickman::DrawHealthBar()
 {
-	const int barX = 10, barY = 10, barWidth = 200, barHeight = 20; 
+	const int barX = 10, barY = 10, barWidth = 200, barHeight = 20;
 
-	float healthPercent = currHealth / MAX_HEALTH_POINT;
+	float healthPercent = displayHealth / MAX_HEALTH_POINT;
 
 	// Clamp to 0.0 – 1.0
 	if (healthPercent < 0.0f)

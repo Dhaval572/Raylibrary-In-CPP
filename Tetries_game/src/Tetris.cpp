@@ -21,7 +21,9 @@ bool eventTriggered(double interval)
 int main()
 {
 	InitWindow(500, 620, "Tetris");
-
+	Image icon = LoadImage("Images/Tetries_game_icon.png");
+	SetWindowIcon(icon);
+	UnloadImage(icon);
 	SetTargetFPS(60);
 
 	Game game = Game();

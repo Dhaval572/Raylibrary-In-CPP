@@ -3,6 +3,9 @@
 void Game::Run()
 {
 	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Run the car");
+	Image icon = LoadImage("Images/Game_icon.png");
+	SetWindowIcon(icon);
+	UnloadImage(icon);
 	SetTargetFPS(60);
 
 	const Texture2D soilTexture = LoadTexture("Images/Soil_Tile.png");
@@ -36,11 +39,12 @@ void Game::Run()
 
 			BeginMode2D(camera);
 			{
+				int startX, endX, startY, endY;
 				// Calculate visible tile indices
-				int startX = static_cast<int>((camera.target.x - halfWidth) / tileWidth) - 1;
-				int endX = static_cast<int>((camera.target.x + halfWidth) / tileWidth) + 1;
-				int startY = static_cast<int>((camera.target.y - halfHeight) / tileHeight) - 1;
-				int endY = static_cast<int>((camera.target.y + halfHeight) / tileHeight) + 1;
+				startX = static_cast<int>((camera.target.x - halfWidth) / tileWidth) - 1;
+				endX = static_cast<int>((camera.target.x + halfWidth) / tileWidth) + 1;
+				startY = static_cast<int>((camera.target.y - halfHeight) / tileHeight) - 1;
+				endY = static_cast<int>((camera.target.y + halfHeight) / tileHeight) + 1;
 
 				// Draw visible tiles
 				for (int x = startX; x <= endX; ++x)

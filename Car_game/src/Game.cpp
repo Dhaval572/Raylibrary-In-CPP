@@ -29,7 +29,7 @@ void Game::Run()
 
 	while (!WindowShouldClose())
 	{
-		const float deltaTime = GetFrameTime();
+		float deltaTime = GetFrameTime();
 		car.Update(deltaTime);
 		camera.target = car.GetPosition();
 

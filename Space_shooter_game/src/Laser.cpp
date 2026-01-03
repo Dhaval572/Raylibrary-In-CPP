@@ -1,37 +1,37 @@
 // Functionallites of lasers
 #include "Laser.hpp"
 
-Laser::Laser(Vector2 bulletPos, int speed)
-{
-	this->bulletPos = bulletPos;
-	this->speed = speed;
-	active = true;
-}
+Laser::Laser(Vector2 bullet_pos, int speed) 
+	: bullet_pos(bullet_pos)
+	, speed(speed)
+	, active(true) {}
 
-void Laser::draw()
+void Laser::Draw()
 {
 	if (active)
-		DrawRectangle(bulletPos.x, bulletPos.y, 4, 15, GREEN); // Draw the bullet
+	{
+		DrawRectangle(bullet_pos.x, bullet_pos.y, 4, 15, GREEN);
+	}
 }
 
-void Laser::update()
+void Laser::Update()
 {
-	bulletPos.y += speed; // Move the bullet up
+	bullet_pos.y += speed; // Move the bullet up
 	if (active)
 	{
 		// Check if the position is off-screen vertically
-		if (bulletPos.y > GetScreenHeight() - 100 || bulletPos.y < 25)
+		if (bullet_pos.y > GetScreenHeight() - 100 || bullet_pos.y < 25)
 		{
 			active = false;
 		}
 	}
 }
 
-Rectangle Laser::rect()
+Rectangle Laser::Rect()
 {
 	Rectangle rect;
-	rect.x = bulletPos.x;
-	rect.y = bulletPos.y;
+	rect.x = bullet_pos.x;
+	rect.y = bullet_pos.y;
 	rect.width = 4;
 	rect.height = 15;
 	return rect;

@@ -1,62 +1,63 @@
 #include "Enemy.hpp"
 
-Texture2D Enemy::enemyImg[3] = {};
-
-Enemy::Enemy(int type, Vector2 enemyPos)
+Texture2D Enemy::enemy_img[3] = {};
+Enemy::Enemy(int type, Vector2 enemy_pos) 
+	: type(type)
+	, enemy_pos(enemy_pos)
 {
-	this->type = type;
-	this->enemyPos = enemyPos;
-
-	if (enemyImg[type - 1].id == 0)
+	if (enemy_img[type - 1].id == 0)
 	{
 		switch (type)
 		{
 		case 1:
-			enemyImg[0] = LoadTexture("src/pixel_ship_blue.png"); // Enemy 1
+			enemy_img[0] = LoadTexture("src/pixel_ship_blue.png"); // Enemy 1
 			break;
 
 		case 2:
-			enemyImg[1] = LoadTexture("src/pixel_ship_yellow.png"); // Enemy 2
+			enemy_img[1] = LoadTexture("src/pixel_ship_yellow.png"); // Enemy 2
 			break;
 
 		case 3:
-			enemyImg[2] = LoadTexture("src/pixel_ship_red_small_2.png"); // Enemy 3
+			enemy_img[2] = LoadTexture("src/pixel_ship_red_small_2.png"); // Enemy 3
 			break;
 
 		default:
-			enemyImg[0] = LoadTexture("src/pixel_ship_blue.png");
+			enemy_img[0] = LoadTexture("src/pixel_ship_blue.png");
 			break;
 		}
 	}
 }
 
-void Enemy::draw()
+void Enemy::Draw()
 {
-	DrawTextureV(enemyImg[type - 1], enemyPos, WHITE);
+	DrawTextureV(enemy_img[type - 1], enemy_pos, WHITE);
 }
 
-int Enemy::getType()
+int Enemy::GetType() const
 {
 	return type;
 }
 
-void Enemy::unloadimg()
+void Enemy::Unloadimg()
 {
 	for (int i = 0; i < 4; i++)
 	{
-		UnloadTexture(enemyImg[i]);
+		UnloadTexture(enemy_img[i]);
 	}
 }
 
-Rectangle Enemy::getRect()
+Rectangle Enemy::GetRect()
 {
 	// Make rectangle arround image to check collision
-	return {enemyPos.x, enemyPos.y,
-	float(enemyImg[type - 1].width),
-	float(enemyImg[type - 1].height)};	
+	return 
+	{
+		enemy_pos.x, enemy_pos.y,
+		float(enemy_img[type - 1].width),
+		float(enemy_img[type - 1].height)
+	};	
 }
 
-void Enemy::update(int direction)
+void Enemy::Update(int direction)
 {
-	enemyPos.x += direction;
+	enemy_pos.x += direction;
 }

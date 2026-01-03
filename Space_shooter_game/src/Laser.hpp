@@ -3,14 +3,14 @@
 
 class Laser
 {
-	Vector2 bulletPos;
+	Vector2 bullet_pos;
 	int speed;
 
 public:
 
-	Laser(Vector2 bulletPos, int speed);
-	void draw();
-	void update();
-	Rectangle rect();
+	explicit Laser(Vector2 bullet_pos, int speed);
+	void Draw();
+	void Update();
+	Rectangle Rect();
 	bool active;
 };

@@ -8,5 +8,6 @@
 		"**/*.o": true,
 		"**/*.exe": true,
 	},
-	"cmake.sourceDirectory": "C:/Users/LENOVO/Documents/ImGui_Setup"
+	"cmake.sourceDirectory": "C:/Users/LENOVO/Documents/ImGui_Setup",
+	"cmake.ignoreCMakeListsMissing": true
 }

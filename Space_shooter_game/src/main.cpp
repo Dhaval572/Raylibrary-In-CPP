@@ -3,25 +3,25 @@
 #include <string>
 #include "Game.hpp"
 
-std::string formateWithLeadingZeros(int number, int width)
+std::string FormateWithLeadingZeros(int number, int width)
 {
-    std::string numberText = std::to_string(number);
-    int leadingZeros = width - numberText.length();
-    return numberText = std::string(leadingZeros, '0') + numberText;
+    std::string number_text = std::to_string(number);
+    int leading_zeros = width - number_text.length();
+    return number_text = std::string(leading_zeros, '0') + number_text;
 }
 
 int main()
 {
-    int sWidth = 650, sHeight = 600;
-    int offSet = 50;
-    InitWindow(sWidth + offSet, sHeight + 2 * offSet, "Space shooter");
+    int s_width = 650, s_height = 600;
+    int offset = 50;
+    InitWindow(s_width + offset, s_height + 2 * offset, "Space shooter");
 
-    Image gameIcon = LoadImage("src/pixel_ship.png");
-    SetWindowIcon(gameIcon);
+    Image game_icon = LoadImage("src/pixel_ship.png");
+    SetWindowIcon(game_icon);
 
     Color green = {0, 228, 48, 255};
-    Color backgroundColor = {29, 29, 27, 255};
-    Texture2D shipImg = LoadTexture("src/pixel_ship.png");
+    Color background_color = {29, 29, 27, 255};
+    Texture2D ship_img = LoadTexture("src/pixel_ship.png");
 
     InitAudioDevice();
     SetTargetFPS(60); // Setting FPS
@@ -31,12 +31,12 @@ int main()
     while (!WindowShouldClose())
     {
         UpdateMusicStream(game.music);
-        game.handleInput();
-        game.update();
+        game.HandleInput();
+        game.Update();
 
         BeginDrawing();
 
-        ClearBackground(backgroundColor);
+        ClearBackground(background_color);
         DrawRectangleRoundedLines({10, 10, 680, 680}, 0.18f, 20, green);
         DrawLineEx({25, 630}, {675, 630}, 3, green);
 
@@ -48,19 +48,20 @@ int main()
         float x = 50.0;
         for (int i = 0; i < game.lives; i++)
         {
-            DrawTextureV(shipImg, {x, 645}, WHITE); // Display the remain spaceship
+            DrawTextureV(ship_img, {x, 645}, WHITE); // Display the remain spaceship
             x += 50;
         }
 
         DrawText("Score", 50, 15, 34, green);
-        std::string scoreText = formateWithLeadingZeros(game.score, 5);
-        DrawText(scoreText.c_str(), 50, 50, 34, green);
+        std::string score_text = FormateWithLeadingZeros(game.score, 5);
+        DrawText(score_text.c_str(), 50, 50, 34, green);
 
         DrawText("HIGH-SCORE", 470, 15, 28, green);
-        std::string highScoreText = formateWithLeadingZeros(game.highScore, 5);
-        DrawText(highScoreText.c_str(), 475, 40, 34, green);
+        std::string high_score_text = 
+        FormateWithLeadingZeros(game.high_score, 5);
+        DrawText(high_score_text.c_str(), 475, 40, 34, green);
 
-        game.draw();
+        game.Draw();
 
         EndDrawing();
     }

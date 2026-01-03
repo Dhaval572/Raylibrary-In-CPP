@@ -1,16 +1,13 @@
 #include "Block.hpp"
 
-Block::Block(Vector2 position)
-{
-	this->position = position;
-}
+Block::Block(Vector2 position) : position(position) {}
 
-void Block::draw()
+void Block::Draw()
 {
 	DrawRectangle(position.x, position.y, 3, 3, GREEN);
 }
 
-Rectangle Block::getRect()
+Rectangle Block::GetRect() const
 {
 	// Draw rectangle arroud block
 	Rectangle rect;

@@ -3,11 +3,10 @@
 
 class Block
 {
-
 	Vector2 position;
 public:
 
-	Block(Vector2 position);
-	void draw();
-	Rectangle getRect();
+	explicit Block(Vector2 position);
+	void Draw();
+	Rectangle GetRect() const;
 };

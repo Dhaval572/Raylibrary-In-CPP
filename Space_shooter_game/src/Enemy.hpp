@@ -3,18 +3,16 @@
 
 class Enemy
 {
-
-
 public:
 
-	Enemy(int type, Vector2 enemyPos);
-	void update(int);
-	void draw();
-	int getType();
-	static void unloadimg();
-	Rectangle getRect();
-	static Texture2D enemyImg[3];
+	explicit Enemy(int type, Vector2 enemy_pos);
+	void Update(int);
+	void Draw();
+	int GetType() const;
+	static void Unloadimg();
+	Rectangle GetRect();
+	static Texture2D enemy_img[3];
 	int type;
-	Vector2 enemyPos;
+	Vector2 enemy_pos;
 
 };

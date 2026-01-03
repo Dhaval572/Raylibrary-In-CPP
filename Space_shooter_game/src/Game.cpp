@@ -6,112 +6,112 @@ Game::Game()
 {
 	music = LoadMusicStream("src/music.ogg");
 	PlayMusicStream(music);
-	explosionSound = LoadSound("src/explosion.ogg");
-	initGame();
+	explosion_sound = LoadSound("src/explosion.ogg");
+	InitGame();
 }
 
 Game::~Game()
 {
-	Enemy::unloadimg(); // To deallocate memory
+	Enemy::Unloadimg(); // To deallocate memory
 	UnloadMusicStream(music);
-	UnloadSound(explosionSound);
+	UnloadSound(explosion_sound);
 }
 
-void Game::draw()
+void Game::Draw()
 {
-	spaceship.draw();
+	spaceship.Draw();
 
-	// Range based for loop for draw bullets
-	for (auto &lasers : spaceship.lasers)
+	// Range based for loop for Draw bullets
+	for (Laser &lasers : spaceship.lasers)
 	{
-		lasers.draw();
+		lasers.Draw();
 	}
 
-	// Range based for loop for draw obstacles
-	for (auto &obstacle : obstacles)
+	// Range based for loop for Draw obstacles
+	for (Obstacle &obstacle : obstacles)
 	{
-		obstacle.draw();
+		obstacle.Draw();
 	}
 
-	// Range based for loop for draw enemies
-	for (auto &enemy : enemies)
+	// Range based for loop for Draw enemies
+	for (Enemy &enemy : enemies)
 	{
-		enemy.draw();
+		enemy.Draw();
 	}
 
-	// Range based for loop for draw enemy's laser ( bullets )
-	for (auto &laser : enemyLaser)
+	// Range based for loop for Draw enemy's laser ( bullets )
+	for (Laser &laser : enemy_laser)
 	{
-		laser.draw();
+		laser.Draw();
 	}
 
-	mysteryShip.draw();
+	mystery_ship.Draw();
 }
 
-void Game::update()
+void Game::Update()
 {
 	if (run)
 	{
-		double currentTime = GetTime();
+		double curr_time = GetTime();
 
 		// Check if enough time has passed since the last mystery ship spawn
-		if (currentTime - timeLastSpawn > mysteryShipSpawnInterval)
+		if (curr_time - time_last_spawn > mystery_ship_spawn_interval)
 		{
-			mysteryShip.spawn();
-			timeLastSpawn = GetTime();						   // Updates the last spawn time
-			mysteryShipSpawnInterval = GetRandomValue(10, 20); // Sets new random time for spawn mystery Ship
+			mystery_ship.Spawn();
+			time_last_spawn = GetTime();						   // Updates the last spawn time
+			mystery_ship_spawn_interval = GetRandomValue(10, 20); // Sets new random time for spawn mystery Ship
 		}
 
 		// Range based for loop for update each bullet
-		for (auto &lasers : spaceship.lasers)
+		for (Laser &lasers : spaceship.lasers)
 		{
-			lasers.update();
+			lasers.Update();
 		}
 
-		moveEnemies();
+		MoveEnemies();
 
-		enemyShootLaser();
+		EnemyShootLaser();
 
 		// For update each laser
-		for (auto &laser : enemyLaser)
+		for (Laser &laser : enemy_laser)
 		{
-			laser.update();
+			laser.Update();
 		}
 
-		deleteInactiveLasers(); // To deallocate memory for waste bullet
+		DeleteInactiveLasers(); // To deallocate memory for waste bullet
 
-		mysteryShip.update();
+		mystery_ship.Update();
 
-		checkForCollision();
+		CheckForCollision();
 	}
 	else
 	{
 		DrawText("Press R to Restart", 100, 97, 50, GREEN);
 		if (IsKeyPressed(KEY_R)) // If 'R' pressed
 		{
-			reset();
-			initGame();
+			Reset();
+			InitGame();
 		}
 	}
 }
 
-void Game::handleInput()
+void Game::HandleInput()
 {
 	if (run)
 	{
 		if (IsKeyDown(KEY_LEFT))
-			spaceship.moveLeft(); // Move space ship left
+			spaceship.MoveLeft(); // Move space ship left
 
 		if (IsKeyDown(KEY_RIGHT))
-			spaceship.moveRight(); // Move space ship left
+			spaceship.MoveRight(); // Move space ship left
 
 		if (IsKeyDown(KEY_SPACE))
-			spaceship.fireLaser(); // Fire the bullet
+			spaceship.FireLaser(); // Fire the bullet
 	}
 }
 
 // To Deallocate memory which was used in bullet
-void Game::deleteInactiveLasers()
+void Game::DeleteInactiveLasers()
 {
 	// This for loop is checks all bullets one by one
 	for (auto it = spaceship.lasers.begin(); it != spaceship.lasers.end();)
@@ -128,33 +128,37 @@ void Game::deleteInactiveLasers()
 	}
 
 	// For enemy laser deallocation
-	for (auto it = enemyLaser.begin(); it != enemyLaser.end();)
+	for (auto it = enemy_laser.begin(); it != enemy_laser.end();)
 	{
 		// If current bullet is inactive then delete it for Deallocate memory
 		if (!it->active)
-			it = enemyLaser.erase(it); // Deallocate the memory of inactive bullet
+			it = enemy_laser.erase(it); // Deallocate the memory of inactive bullet
 		else
 			++it; // Check for next bullets
 	}
 }
 
-std::vector<Obstacle> Game::createObstacle()
+std::vector<Obstacle> Game::CreateObstacle()
 {
-	int obstacleWidth = Obstacle::grid[0].size() * 3;
-	float gap = (GetScreenWidth() - (4 * obstacleWidth)) / 5;
+	int obstacle_w = Obstacle::grid[0].size() * 3;
+	float gap = (GetScreenWidth() - (4 * obstacle_w)) / 5;
 
 	for (int i = 0; i < 4; i++)
 	{
-		float offSetX = (i + 1) * gap + i * obstacleWidth;
-		obstacles.push_back(Obstacle({offSetX, float(GetScreenWidth() - 200)}));
+		float offset_x = (i + 1) * gap + i * obstacle_w;
+		obstacles.emplace_back
+		(
+			Obstacle({offset_x, float(GetScreenWidth() - 200)})
+		);
 	}
 
 	return obstacles;
 }
 
-std::vector<Enemy> Game::createEnemy()
+std::vector<Enemy> Game::CreateEnemy()
 {
 	std::vector<Enemy> enemies;
+	enemies.reserve(60);
 
 	// For arrange enemies in his position
 	for (int row = 0; row < 5; row++)
@@ -172,72 +176,86 @@ std::vector<Enemy> Game::createEnemy()
 
 			float x = 75 + column * 55;
 			float y = 110 + row * 55;
-			enemies.push_back(Enemy(enemyType, {x, y})); // Spawn next enemies after killing
+			enemies.emplace_back(Enemy(enemyType, {x, y}));
 		}
 	}
 
 	return enemies;
 }
 
-void Game::moveEnemies()
+void Game::MoveEnemies()
 {
-	for (auto &enemy : enemies)
+	for (Enemy &enemy : enemies)
 	{
 		// If enemy gone off screen at right side or left side
-		if (enemy.enemyPos.x + enemy.enemyImg[enemy.type - 1].width > GetScreenWidth() - 25)
+		if 
+		(
+			enemy.enemy_pos.x + 
+			enemy.enemy_img[enemy.type - 1].width > GetScreenWidth() - 25
+		)
 		{
-			enemyDirection = -1; // Now enemy will move oposite direction
-			moveDownEnemies(1);
+			enemy_direction = -1; // Now enemy will move oposite direction
+			MoveDownEnemies(1);
 		}
 
-		if (enemy.enemyPos.x < 25)
+		if (enemy.enemy_pos.x < 25)
 		{
-			enemyDirection = 1; // Now enemy will move oposite direction
-			moveDownEnemies(1);
+			enemy_direction = 1; // Now enemy will move oposite direction
+			MoveDownEnemies(1);
 		}
 
-		enemy.update(enemyDirection);
+		enemy.Update(enemy_direction);
 	}
 }
 
-void Game::moveDownEnemies(int distance)
+void Game::MoveDownEnemies(int distance)
 {
 	// To move down side each enemy
-	for (auto &enemy : enemies)
+	for (Enemy &enemy : enemies)
 	{
-		enemy.enemyPos.y += distance;
+		enemy.enemy_pos.y += distance;
 	}
 }
 
-void Game::enemyShootLaser()
+void Game::EnemyShootLaser()
 {
-	double currentTime = GetTime();
-	if (currentTime - timeLastEnemyFired >= enemyLaserShootInterval && !enemies.empty())
+	double curr_time = GetTime();
+	if 
+	(
+		curr_time - time_last_enemy_fired >= enemy_laser_shoot_interval 
+		&& !enemies.empty()
+	)
 	{
 		int randomIndex = GetRandomValue(0, enemies.size() - 1);
 		Enemy &enemy = enemies[randomIndex];
 
 		// Add laser vector data structure
-		enemyLaser.push_back(Laser({enemy.enemyPos.x + enemy.enemyImg[enemy.type - 1].width / 2, enemy.enemyPos.y + enemy.enemyImg[enemy.type - 1].height}, 6));
+		enemy_laser.emplace_back
+		(
+			Laser
+			(
+				{enemy.enemy_pos.x + enemy.enemy_img[enemy.type - 1].width / 2, enemy.enemy_pos.y + enemy.enemy_img[enemy.type - 1].height}, 6
+			)
+		);
 
-		timeLastEnemyFired = GetTime(); // Upating last fired time
+		time_last_enemy_fired = GetTime(); // Upating last fired time
 	}
 }
 
-void Game::checkForCollision()
+void Game::CheckForCollision()
 {
 	// Collision check for ( our space ship ) Spaceship lasers
-	for (auto &laser : spaceship.lasers)
+	for (Laser &laser : spaceship.lasers)
 	{
 		// Checks collisions for every enemy space ships
 		auto it = enemies.begin();
 		while (it != enemies.end())
 		{
 			// Checks collision between enemy and our bullets
-			if (CheckCollisionRecs(it->getRect(), laser.rect()))
+			if (CheckCollisionRecs(it->GetRect(), laser.Rect()))
 			{
 
-				PlaySound(explosionSound);
+				PlaySound(explosion_sound);
 
 				// If you hit type 1 enemy
 				if (it->type == 1)
@@ -249,7 +267,7 @@ void Game::checkForCollision()
 				if (it->type == 3)
 					score += 300;
 
-				checkForHighScore();
+				CheckForHighScore();
 				it = enemies.erase(it); // Remove enemies which collided by bullet
 				laser.active = false;
 			}
@@ -260,13 +278,13 @@ void Game::checkForCollision()
 		}
 
 		// Checks collision for every obstacles ( by our )
-		for (auto &obstacle : obstacles)
+		for (Obstacle &obstacle : obstacles)
 		{
 			auto it = obstacle.blocks.begin();
 			while (it != obstacle.blocks.end())
 			{
 				// Checks collision between blocks and our bullets
-				if (CheckCollisionRecs(it->getRect(), laser.rect()))
+				if (CheckCollisionRecs(it->GetRect(), laser.Rect()))
 				{
 					it = obstacle.blocks.erase(it);
 					laser.active = false;
@@ -279,37 +297,37 @@ void Game::checkForCollision()
 		}
 
 		// Checks collision between mystery ship and our bullets
-		if (CheckCollisionRecs(mysteryShip.getRect(), laser.rect()))
+		if (CheckCollisionRecs(mystery_ship.GetRect(), laser.Rect()))
 		{
-			mysteryShip.alive = false;
+			mystery_ship.alive = false;
 			laser.active = false;
 			score += 500;
-			checkForHighScore();
-			PlaySound(explosionSound);
+			CheckForHighScore();
+			PlaySound(explosion_sound);
 		}
 	}
 
 	// Collision for enemy bullets ( to our )
-	for (auto &laser : enemyLaser)
+	for (Laser &laser : enemy_laser)
 	{
 		// Checks collision between enemy bullets and our space ship
-		if (CheckCollisionRecs(laser.rect(), spaceship.getRect()))
+		if (CheckCollisionRecs(laser.Rect(), spaceship.GetRect()))
 		{
 			laser.active = false;
 			lives--;
 			if (lives == 0)
 			{
-				gameOver();
+				GameOver();
 			}
 		}
 		// Checks collision for every obstacles ( by enemy )
-		for (auto &obstacle : obstacles)
+		for (Obstacle &obstacle : obstacles)
 		{
 			auto it = obstacle.blocks.begin();
 			while (it != obstacle.blocks.end())
 			{
 				// Checks collision between blocks and enemy bullets
-				if (CheckCollisionRecs(it->getRect(), laser.rect()))
+				if (CheckCollisionRecs(it->GetRect(), laser.Rect()))
 				{
 					it = obstacle.blocks.erase(it);
 					laser.active = false;
@@ -323,15 +341,15 @@ void Game::checkForCollision()
 	}
 
 	// Enemy collision with obstacle
-	for (auto &enemy : enemies)
+	for (Enemy &enemy : enemies)
 	{
-		for (auto &obstacle : obstacles)
+		for (Obstacle &obstacle : obstacles)
 		{
 			auto it = obstacle.blocks.begin();
 			while (it != obstacle.blocks.end())
 			{
 				// Checks collision between blocks and enemy
-				if (CheckCollisionRecs(it->getRect(), enemy.getRect()))
+				if (CheckCollisionRecs(it->GetRect(), enemy.GetRect()))
 				{
 					it = obstacle.blocks.erase(it);
 				}
@@ -343,69 +361,69 @@ void Game::checkForCollision()
 		}
 
 		// Checks collision between enemy and our
-		if (CheckCollisionRecs(enemy.getRect(), spaceship.getRect()))
+		if (CheckCollisionRecs(enemy.GetRect(), spaceship.GetRect()))
 		{
-			gameOver();
+			GameOver();
 		}
 	}
 }
 
-void Game::gameOver()
+void Game::GameOver()
 {
 	run = false;
 }
 
-void Game::initGame()
+void Game::InitGame()
 {
-	obstacles = createObstacle();
-	enemies = createEnemy();
-	enemyDirection = 1;
-	timeLastEnemyFired = 0.0;
-	timeLastSpawn = 0.0;
+	obstacles = CreateObstacle();
+	enemies = CreateEnemy();
+	enemy_direction = 1;
+	time_last_enemy_fired = 0.0;
+	time_last_spawn = 0.0;
 	lives = 3;
 	run = true;
 	score = 0;
-	highScore = loadHighScoreFromFile();
-	mysteryShipSpawnInterval = GetRandomValue(10, 20);
+	high_score = LoadHighScoreFromFile();
+	mystery_ship_spawn_interval = GetRandomValue(10, 20);
 }
 
-void Game::checkForHighScore()
+void Game::CheckForHighScore()
 {
-	if (score > highScore)
+	if (score > high_score)
 	{
-		highScore = score;
-		saveHighScoreFile(highScore);
+		high_score = score;
+		SaveHighScoreFile(high_score);
 	}
 }
 
 // To save the high score in permenent storage
-void Game::saveHighScoreFile(int highScore)
+void Game::SaveHighScoreFile(int highScore)
 {
-	std::ofstream highScoreFile("High_score.txt");
-	if (highScoreFile.is_open())
+	std::ofstream high_score_file("High_score.txt");
+	if (high_score_file.is_open())
 	{
-		highScoreFile << highScore;
-		highScoreFile.close();
+		high_score_file << highScore;
+		high_score_file.close();
 	}
 }
 
-int Game::loadHighScoreFromFile()
+int Game::LoadHighScoreFromFile()
 {
-	int loadedHighScore = 0;
-	std::ifstream highScoreFile("High_score.txt");
-	if (highScoreFile.is_open())
+	int loaded_high_score = 0;
+	std::ifstream high_score_file("High_score.txt");
+	if (high_score_file.is_open())
 	{
-		highScoreFile >> loadedHighScore;
-		highScoreFile.close(); // To deallocate memory
+		high_score_file >> loaded_high_score;
+		high_score_file.close(); 
 	}
 
-	return loadedHighScore;
+	return loaded_high_score;
 }
 
-void Game::reset()
+void Game::Reset()
 {
-	spaceship.reset();
-	enemies.clear();	// Remove all enemies
-	enemyLaser.clear(); // Remove all lasers
-	obstacles.clear();	// Remove all obstacles
+	spaceship.Reset();
+	enemies.clear();	
+	enemy_laser.clear(); 
+	obstacles.clear();	
 }

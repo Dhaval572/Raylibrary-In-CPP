@@ -1,48 +1,48 @@
-#include "Space_ship.hpp"
+#include "SpaceShip.hpp"
 #include "Obstacle.hpp"
 #include "Enemy.hpp"
-#include "Mystery_ship.hpp"
+#include "MysteryShip.hpp"
 #pragma once
 
 class Game
 {
 public:
 
-	Game();
+	explicit Game();
 	~Game();
-	void draw();
-	void update();
-	void handleInput();
+	void Draw();
+	void Update();
+	void HandleInput();
 	bool run;
 	int lives;
 	int score;
-	int highScore;
+	int high_score;
 	Music music;
 
 private:
 
-	void deleteInactiveLasers();
-	std::vector<Obstacle> createObstacle();
-	std::vector<Enemy> createEnemy();
-	void moveEnemies();
-	void moveDownEnemies(int distance);
-	void enemyShootLaser();
-	void checkForCollision();
-	void gameOver();
-	void reset();
-	void initGame();
-	void checkForHighScore();
-	void saveHighScoreFile(int highScore);
-	int loadHighScoreFromFile();
+	void DeleteInactiveLasers();
+	std::vector<Obstacle> CreateObstacle();
+	std::vector<Enemy> CreateEnemy();
+	void MoveEnemies();
+	void MoveDownEnemies(int distance);
+	void EnemyShootLaser();
+	void CheckForCollision();
+	void GameOver();
+	void Reset();
+	void InitGame();
+	void CheckForHighScore();
+	void SaveHighScoreFile(int highScore);
+	int LoadHighScoreFromFile();
 	SpaceShip spaceship; // Making object
 	std::vector<Obstacle> obstacles;
 	std::vector<Enemy> enemies;
-	int enemyDirection;
-	std::vector<Laser> enemyLaser;
-	constexpr static float enemyLaserShootInterval = 0.35;
-	float timeLastEnemyFired;
-	MysteryShip mysteryShip;
-	float mysteryShipSpawnInterval;
-	float timeLastSpawn;
-	Sound explosionSound;
+	int enemy_direction;
+	std::vector<Laser> enemy_laser;
+	constexpr static float enemy_laser_shoot_interval = 0.35;
+	float time_last_enemy_fired;
+	MysteryShip mystery_ship;
+	float mystery_ship_spawn_interval;
+	float time_last_spawn;
+	Sound explosion_sound;
 };
